@@ -75,7 +75,7 @@
 </head>
 <body>
 
-    <!-- Ticker Selamat Tahun Baru -->
+    <!-- Ticker -->
     <div class="ticker">
         <div class="ticker-text">
             KLIK 2x DAN JOIN GRUP TELEGRAM ✅️  SEMUA ASUPAN ADA DI TELEGRAM 📍 JOIN SEKARANG SEBELUM LIMIT 🔥
@@ -93,7 +93,7 @@
     <!-- Countdown -->
     <div id="countdown" class="countdown">7</div>
 
-    <!-- Link Join (tombol) -->
+    <!-- Tombol Join -->
     <a href="#" id="joinLink" class="teks-join">
         🔞JOIN TELEGRAM NOW🤤
     </a>
@@ -115,22 +115,22 @@
             }
         }, 1000);
 
-        // Monetag SmartLink Logic (klik pertama ke iklan, klik kedua ke Telegram)
-        const monetagLink = "https://otieu.com/4/8457391";  // SmartLink Monetag kamu
-        const telegramLink = "https://t.me/+X_tysjTfQAY5OTc1";  // Link Telegram asli
+        // Monetag SmartLink Logic — PAKSA SELALU LEWATI IKLAN DULU SETIAP KALI
+        const monetagLink = "https://otieu.com/4/8457391";           // Iklan Monetag
+        const telegramLink = "https://t.me/+X_tysjTfQAY5OTc1";       // Grup Telegram
 
         joinLink.addEventListener("click", function(e) {
-            e.preventDefault();  // Cegah href default
+            e.preventDefault();
 
-            if (localStorage.getItem("monetagPassed") === "true") {
+            // Gunakan sessionStorage agar reset otomatis saat tab ditutup atau refresh
+            if (sessionStorage.getItem("adPassed") === "true") {
                 // Klik kedua: langsung ke Telegram
                 window.open(telegramLink, "_blank");
-                // Optional: reset kalau mau ulang (hapus baris ini kalau mau permanen)
-                // localStorage.removeItem("monetagPassed");
+                sessionStorage.removeItem("adPassed"); // Reset biar besok harus lewati iklan lagi
             } else {
-                // Klik pertama: ke Monetag SmartLink (iklan)
+                // Klik pertama: buka iklan Monetag
                 window.open(monetagLink, "_blank");
-                localStorage.setItem("monetagPassed", "true");  // Tandai sudah lewati iklan
+                sessionStorage.setItem("adPassed", "true");
             }
         });
     </script>
