@@ -3,140 +3,261 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Score Pro</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<title>Asupan Viral</title>
 
 <style>
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  color: #fff;
-  margin: 0;
-  padding: 20px;
+    margin:0;
+    background:black;
+    color:white;
+    font-family:'Poppins', sans-serif;
+    text-align:center;
 }
 
-h1 {
-  text-align: center;
+.page {
+    display:none;
+    min-height:100vh;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+}
+.active { display:flex; }
+
+.online {
+    position:fixed;
+    top:10px;
+    left:50%;
+    transform:translateX(-50%);
+    background:red;
+    padding:8px 15px;
+    border-radius:20px;
+    font-size:14px;
 }
 
-.container {
-  max-width: 500px;
-  margin: auto;
+.btn {
+    background:white;
+    color:black;
+    padding:15px;
+    margin:10px;
+    width:280px;
+    border-radius:12px;
+    font-weight:600;
+    cursor:pointer;
 }
 
-.match {
-  background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(10px);
-  margin: 12px 0;
-  padding: 15px;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+.row {
+    background:#eee;
+    color:black;
+    width:300px;
+    margin:10px;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    border-radius:10px;
 }
 
-.teams {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.popup {
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    background:#111;
+    padding:10px 15px;
+    border-radius:10px;
+    font-size:14px;
+    opacity:0;
+    transition:.5s;
 }
 
-.team {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+.show { opacity:1; }
 
-.team img {
-  width: 30px;
-  height: 30px;
-}
+.pulse { animation:pulse 1s infinite; }
+@keyframes pulse {50%{transform:scale(1.1);}}
 
-.score {
-  font-size: 26px;
-  font-weight: bold;
-  text-align: center;
-  margin: 10px 0;
-}
-
-.status {
-  text-align: center;
-  font-size: 14px;
-  color: #94a3b8;
-}
-
-.live {
-  color: red;
-  font-weight: bold;
+@media(max-width:600px){
+    .btn{width:240px;}
+    .row{width:260px;}
 }
 </style>
 </head>
-
 <body>
 
-<h1>⚽ Live Score Pro</h1>
-<div class="container" id="matches">Loading...</div>
+<div class="online" id="online">👥 1,234 online</div>
+<div id="popup" class="popup"></div>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
+    <h2>🔞 Khusus 18+</h2>
+    <h1>Collector mana yang kamu suka?</h1>
+
+    <div class="btn" onclick="vote('indo')">Asupan Indo</div>
+    <div class="btn" onclick="vote('japan')">Asupan Japan</div>
+    <div class="btn" onclick="vote('barat')">Asupan Barat</div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+    <h1>🔥 Hasil Voting</h1>
+
+    <div class="row">Indo <span id="indo"></span></div>
+    <div class="row">Japan <span id="japan"></span></div>
+    <div class="row">Barat <span id="barat"></span></div>
+
+    <h3 id="timer"></h3>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="page">
+    <h1>🔞 Verifikasi 18+</h1>
+
+    <p style="font-size:13px; color:#aaa; max-width:280px;">
+        Setelah mengklik tombol 18+ untuk mengakses konten terbaik, silakan klik kembali untuk bergabung ke channel Telegram kami.
+    </p>
+
+    <div class="btn pulse" onclick="goAds()" style="background:red;color:white;">
+        SAYA 18+
+    </div>
+
+    <div class="btn" onclick="goBack()" style="background:#333;color:white;">
+        DI BAWAH 18
+    </div>
+</div>
+
+<!-- PAGE 4 -->
+<div id="page4" class="page">
+    <h1 class="pulse">⬇ Join Telegram ⬇</h1>
+    <div class="btn" onclick="goTG()">MASUK SEKARANG</div>
+</div>
 
 <script>
-const API_KEY = "6f9f28e3412c46ab8c446d873bfd48f7";
-const URL = "https://api.football-data.org/v4/matches";
 
-async function loadMatches() {
-  try {
-    const res = await fetch(URL, {
-      headers: { "X-Auth-Token": API_KEY }
-    });
+const IKLAN = "https://www.terabox.com/wap/hive/channelShare?bot_uk=4399535594253";
+const TELEGRAM = "https://t.me/+fpC5TNg56Jg4YWNl";
 
-    console.log("STATUS:", res.status);
+// 🔥 DATA DENGAN BOOST OTOMATIS
+function getData(){
+    let data = localStorage.getItem("cuanSurvey");
 
-    const data = await res.json();
-    const container = document.getElementById("matches");
-    container.innerHTML = "";
+    if(!data){
+        let init = {
+            indo: 100,
+            japan: 105,
+            barat: 110,
+            lastUpdate: Date.now()
+        };
+        localStorage.setItem("cuanSurvey", JSON.stringify(init));
+        return init;
+    }
 
-    data.matches.slice(0, 15).forEach(match => {
-      const home = match.homeTeam.name;
-      const away = match.awayTeam.name;
+    data = JSON.parse(data);
 
-      const homeLogo = match.homeTeam.crest;
-      const awayLogo = match.awayTeam.crest;
+    let now = Date.now();
+    let diff = Math.floor((now - data.lastUpdate) / 60000);
 
-      const scoreHome = match.score.fullTime.home ?? "-";
-      const scoreAway = match.score.fullTime.away ?? "-";
+    if(diff > 0){
+        data.indo += diff * 2;
+        data.japan += diff * 2;
+        data.barat += diff * 2;
+        data.lastUpdate = now;
 
-      let status = match.status;
-      if (status === "IN_PLAY") status = "🔴 LIVE";
+        localStorage.setItem("cuanSurvey", JSON.stringify(data));
+    }
 
-      const el = document.createElement("div");
-      el.className = "match";
-
-      el.innerHTML = `
-        <div class="teams">
-          <div class="team">
-            <img src="${homeLogo || ''}" onerror="this.style.display='none'">
-            <span>${home}</span>
-          </div>
-          <div class="team">
-            <span>${away}</span>
-            <img src="${awayLogo || ''}" onerror="this.style.display='none'">
-          </div>
-        </div>
-
-        <div class="score">${scoreHome} - ${scoreAway}</div>
-        <div class="status ${status.includes('LIVE') ? 'live' : ''}">
-          ${status}
-        </div>
-      `;
-
-      container.appendChild(el);
-    });
-
-  } catch (err) {
-    document.getElementById("matches").innerHTML = "❌ Gagal load data";
-    console.error(err);
-  }
+    return data;
 }
 
-loadMatches();
+function saveData(data){
+    localStorage.setItem("cuanSurvey", JSON.stringify(data));
+}
 
-// refresh tiap 60 detik
-setInterval(loadMatches, 60000);
+// VOTE REAL
+function vote(choice){
+    let data = getData();
+    data[choice] += 1;
+    saveData(data);
+    showResult();
+}
+
+// RESULT
+function showResult(){
+    let data = getData();
+    showPage("page2");
+
+    animate("indo", data.indo);
+    animate("japan", data.japan);
+    animate("barat", data.barat);
+
+    let time = 3;
+    let timer = setInterval(()=>{
+        document.getElementById("timer").innerText =
+        "⏳ Membuka akses " + time + " detik...";
+        time--;
+
+        if(time < 0){
+            clearInterval(timer);
+            showPage("page3");
+        }
+    },1000);
+}
+
+// ANIMASI
+function animate(id, target){
+    let el = document.getElementById(id);
+    let count = 0;
+
+    let i = setInterval(()=>{
+        count += Math.ceil(target/30);
+        if(count >= target){
+            count = target;
+            clearInterval(i);
+        }
+        el.innerText = count;
+    },30);
+}
+
+// IKLAN
+let klik = false;
+
+function goAds(){
+    klik = true;
+    window.location.href = IKLAN;
+}
+
+document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible" && klik){
+        showPage("page4");
+        klik=false;
+    }
+});
+
+// ONLINE COUNTER
+setInterval(()=>{
+    let num = 1000 + Math.floor(Math.random()*500);
+    document.getElementById("online").innerText = "👥 " + num + " online";
+},2000);
+
+// POPUP JUMLAH ORANG
+setInterval(()=>{
+    let jumlah = Math.floor(Math.random()*7)+1;
+    let el = document.getElementById("popup");
+
+    el.innerText = jumlah + " orang baru saja vote";
+    el.classList.add("show");
+
+    setTimeout(()=>el.classList.remove("show"),2000);
+},3000);
+
+// NAV
+function goBack(){ alert("Akses ditolak"); }
+function goTG(){ window.location.href = TELEGRAM; }
+
+function showPage(id){
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
 </script>
 
 </body>
