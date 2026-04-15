@@ -18,14 +18,6 @@ h1 {
   text-align: center;
 }
 
-select {
-  padding: 10px;
-  border-radius: 8px;
-  border: none;
-  margin: 15px;
-  font-size: 16px;
-}
-
 .container {
   max-width: 500px;
   margin: auto;
@@ -37,8 +29,6 @@ select {
   margin: 12px 0;
   padding: 15px;
   border-radius: 15px;
-  display: flex;
-  flex-direction: column;
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
@@ -82,35 +72,25 @@ select {
 <body>
 
 <h1>⚽ Live Score Pro</h1>
-
-<div style="text-align:center;">
-<select id="league">
-  <option value="PL">Premier League</option>
-  <option value="CL">Champions League</option>
-  <option value="SA">Serie A</option>
-  <option value="PD">La Liga</option>
-</select>
-</div>
-
-<div class="container" id="matches"></div>
+<div class="container" id="matches">Loading...</div>
 
 <script>
 const API_KEY = "6f9f28e3412c46ab8c446d873bfd48f7";
+const URL = "https://api.football-data.org/v4/matches";
 
 async function loadMatches() {
-  const league = document.getElementById("league").value;
-  const URL = `https://api.football-data.org/v4/competitions/${league}/matches`;
-
   try {
     const res = await fetch(URL, {
       headers: { "X-Auth-Token": API_KEY }
     });
 
+    console.log("STATUS:", res.status);
+
     const data = await res.json();
     const container = document.getElementById("matches");
     container.innerHTML = "";
 
-    data.matches.slice(0, 10).forEach(match => {
+    data.matches.slice(0, 15).forEach(match => {
       const home = match.homeTeam.name;
       const away = match.awayTeam.name;
 
@@ -129,12 +109,12 @@ async function loadMatches() {
       el.innerHTML = `
         <div class="teams">
           <div class="team">
-            <img src="${homeLogo}" alt="">
+            <img src="${homeLogo || ''}" onerror="this.style.display='none'">
             <span>${home}</span>
           </div>
           <div class="team">
             <span>${away}</span>
-            <img src="${awayLogo}" alt="">
+            <img src="${awayLogo || ''}" onerror="this.style.display='none'">
           </div>
         </div>
 
@@ -148,14 +128,14 @@ async function loadMatches() {
     });
 
   } catch (err) {
-    document.getElementById("matches").innerHTML = "❌ Error loading data";
+    document.getElementById("matches").innerHTML = "❌ Gagal load data";
     console.error(err);
   }
 }
 
-document.getElementById("league").addEventListener("change", loadMatches);
-
 loadMatches();
+
+// refresh tiap 60 detik
 setInterval(loadMatches, 60000);
 </script>
 
