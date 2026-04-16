@@ -8,9 +8,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-* {margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body {background:#0f0f0f;color:white;}
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
 
+body {
+  background:#0f0f0f;
+  color:white;
+}
+
+/* HEADER */
 .header {
   text-align:center;
   padding:15px;
@@ -21,6 +31,7 @@ body {background:#0f0f0f;color:white;}
   -webkit-text-fill-color:transparent;
 }
 
+/* GRID */
 .container {
   display:grid;
   gap:10px;
@@ -31,20 +42,50 @@ body {background:#0f0f0f;color:white;}
 @media (min-width:600px){ .container{grid-template-columns:repeat(4,1fr);} }
 @media (min-width:900px){ .container{grid-template-columns:repeat(5,1fr);} }
 
-.card {background:#1a1a1a;border-radius:10px;overflow:hidden;}
-.card img {width:100%;height:120px;object-fit:cover;}
+/* CARD */
+.card {
+  background:#1a1a1a;
+  border-radius:10px;
+  overflow:hidden;
+}
 
-.actions {display:flex;gap:5px;padding:5px;}
+.card img {
+  width:100%;
+  height:120px;
+  object-fit:cover;
+}
+
+/* ACTION BUTTON */
+.actions {
+  display:flex;
+  gap:5px;
+  padding:5px;
+}
 
 .btn {
   flex:1;
-  font-size:12px;
-  padding:6px;
-  text-align:center;
-  background:linear-gradient(45deg,#ff416c,#ff4b2b);
-  color:white;
-  text-decoration:none;
-  border-radius:5px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+  background:#222;
+  border-radius:6px;
+  transition:0.2s;
+}
+
+.btn svg {
+  width:18px;
+  height:18px;
+  fill:white;
+}
+
+.btn:hover {
+  background:#ff416c;
+  transform:scale(1.1);
+}
+
+.btn:hover svg {
+  filter: drop-shadow(0 0 5px #ff416c);
 }
 
 /* PAGINATION */
@@ -73,7 +114,7 @@ body {background:#0f0f0f;color:white;}
 <div class="header">🔥 VIDEO DOWNLOAD 🔥</div>
 
 <div id="list" class="container"></div>
-<div class="pagination" id="pagination"></div>
+<div id="pagination" class="pagination"></div>
 
 <script>
 const perPage = 15;
@@ -103,8 +144,17 @@ function renderPage(page){
       <div class="card">
         <img src="${item.img}" loading="lazy">
         <div class="actions">
-          <a href="${item.link}" target="_blank" class="btn">WATCH</a>
-          <a href="${item.link}" target="_blank" class="btn">DOWNLOAD</a>
+          <a href="${item.link}" target="_blank" class="btn">
+            <svg viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          </a>
+
+          <a href="${item.link}" target="_blank" class="btn">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3v12m0 0l-4-4m4 4l4-4M5 19h14"/>
+            </svg>
+          </a>
         </div>
       </div>
     `;
