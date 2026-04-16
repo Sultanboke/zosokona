@@ -1,264 +1,82 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download Video</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    .container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      padding: 20px;
+    }
 
-<title>Asupan Viral</title>
+    .card {
+      background: #111;
+      padding: 10px;
+      border-radius: 10px;
+    }
 
-<style>
-body {
-    margin:0;
-    background:black;
-    color:white;
-    font-family:'Poppins', sans-serif;
-    text-align:center;
-}
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
 
-.page {
-    display:none;
-    min-height:100vh;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-}
-.active { display:flex; }
+    .btn {
+      display: block;
+      margin-top: 10px;
+      padding: 12px;
+      background: white;
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+    }
 
-.online {
-    position:fixed;
-    top:10px;
-    left:50%;
-    transform:translateX(-50%);
-    background:red;
-    padding:8px 15px;
-    border-radius:20px;
-    font-size:14px;
-}
-
-.btn {
-    background:white;
-    color:black;
-    padding:15px;
-    margin:10px;
-    width:280px;
-    border-radius:12px;
-    font-weight:600;
-    cursor:pointer;
-}
-
-.row {
-    background:#eee;
-    color:black;
-    width:300px;
-    margin:10px;
-    padding:15px;
-    display:flex;
-    justify-content:space-between;
-    border-radius:10px;
-}
-
-.popup {
-    position:fixed;
-    bottom:20px;
-    left:20px;
-    background:#111;
-    padding:10px 15px;
-    border-radius:10px;
-    font-size:14px;
-    opacity:0;
-    transition:.5s;
-}
-
-.show { opacity:1; }
-
-.pulse { animation:pulse 1s infinite; }
-@keyframes pulse {50%{transform:scale(1.1);}}
-
-@media(max-width:600px){
-    .btn{width:240px;}
-    .row{width:260px;}
-}
-</style>
+    .btn:hover {
+      background: gray;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="online" id="online">👥 1,234 online</div>
-<div id="popup" class="popup"></div>
+<h1>VIDEO DOWNLOAD</h1>
 
-<!-- PAGE 1 -->
-<div id="page1" class="page active">
-    <h2>🔞 Khusus 18+</h2>
-    <h1>Collector mana yang kamu suka?</h1>
+<div class="container">
 
-    <div class="btn" onclick="vote('indo')">Asupan Indo</div>
-    <div class="btn" onclick="vote('japan')">Asupan Japan</div>
-    <div class="btn" onclick="vote('barat')">Asupan Barat</div>
+  <div class="card">
+    <img src="IMG_1.jpg" loading="lazy">
+    <a href="https://1024terabox.com/s/1dl656Z3BaEvBSq0mscjZsw" class="btn">DOWNLOAD</a>
+  </div>
+
+  <div class="card">
+    <img src="IMG_2.jpg" loading="lazy">
+    <a href="https://1024terabox.com/s/1uLvxYCWWjqmIr2c4YYF2jg" class="btn">DOWNLOAD</a>
+  </div>
+
+  <div class="card">
+    <img src="IMG_3.jpg" loading="lazy">
+    <a href="https://1024terabox.com/s/19Chx1vrfOrS3PJaS8LVUtA" class="btn">DOWNLOAD</a>
+  </div>
+
+  <div class="card">
+    <img src="IMG_4.jpg" loading="lazy">
+    <a href="https://1024terabox.com/s/1LShq_6jCzCZz9k1Y2uTlOg" class="btn">DOWNLOAD</a>
+  </div>
+
+  <div class="card">
+    <img src="IMG_5.jpg" loading="lazy">
+    <a href="https://1024terabox.com/s/1xrDeka54G720zmKLTwlzxw" class="btn">DOWNLOAD</a>
+  </div>
+
 </div>
-
-<!-- PAGE 2 -->
-<div id="page2" class="page">
-    <h1>🔥 Hasil Voting</h1>
-
-    <div class="row">Indo <span id="indo"></span></div>
-    <div class="row">Japan <span id="japan"></span></div>
-    <div class="row">Barat <span id="barat"></span></div>
-
-    <h3 id="timer"></h3>
-</div>
-
-<!-- PAGE 3 -->
-<div id="page3" class="page">
-    <h1>🔞 Verifikasi 18+</h1>
-
-    <p style="font-size:13px; color:#aaa; max-width:280px;">
-        Setelah mengklik tombol 18+ untuk mengakses konten terbaik, Jika ada iklan silakan klik kembali untuk bergabung ke channel Telegram
-    </p>
-
-    <div class="btn pulse" onclick="goAds()" style="background:red;color:white;">
-        SAYA 18+
-    </div>
-
-    <div class="btn" onclick="goBack()" style="background:#333;color:white;">
-        DI BAWAH 18
-    </div>
-</div>
-
-<!-- PAGE 4 -->
-<div id="page4" class="page">
-    <h1 class="pulse">⬇ Join Telegram ⬇</h1>
-    <div class="btn" onclick="goTG()">MASUK SEKARANG</div>
-</div>
-
-<script>
-
-const IKLAN = "https://www.spacex.com/";
-const TELEGRAM = "https://t.me/+fpC5TNg56Jg4YWNl";
-
-// 🔥 DATA DENGAN BOOST OTOMATIS
-function getData(){
-    let data = localStorage.getItem("cuanSurvey");
-
-    if(!data){
-        let init = {
-            indo: 100,
-            japan: 105,
-            barat: 110,
-            lastUpdate: Date.now()
-        };
-        localStorage.setItem("cuanSurvey", JSON.stringify(init));
-        return init;
-    }
-
-    data = JSON.parse(data);
-
-    let now = Date.now();
-    let diff = Math.floor((now - data.lastUpdate) / 60000);
-
-    if(diff > 0){
-        data.indo += diff * 2;
-        data.japan += diff * 2;
-        data.barat += diff * 2;
-        data.lastUpdate = now;
-
-        localStorage.setItem("cuanSurvey", JSON.stringify(data));
-    }
-
-    return data;
-}
-
-function saveData(data){
-    localStorage.setItem("cuanSurvey", JSON.stringify(data));
-}
-
-// VOTE REAL
-function vote(choice){
-    let data = getData();
-    data[choice] += 1;
-    saveData(data);
-    showResult();
-}
-
-// RESULT
-function showResult(){
-    let data = getData();
-    showPage("page2");
-
-    animate("indo", data.indo);
-    animate("japan", data.japan);
-    animate("barat", data.barat);
-
-    let time = 3;
-    let timer = setInterval(()=>{
-        document.getElementById("timer").innerText =
-        "⏳ Membuka akses " + time + " detik...";
-        time--;
-
-        if(time < 0){
-            clearInterval(timer);
-            showPage("page3");
-        }
-    },1000);
-}
-
-// ANIMASI
-function animate(id, target){
-    let el = document.getElementById(id);
-    let count = 0;
-
-    let i = setInterval(()=>{
-        count += Math.ceil(target/30);
-        if(count >= target){
-            count = target;
-            clearInterval(i);
-        }
-        el.innerText = count;
-    },30);
-}
-
-// IKLAN
-let klik = false;
-
-function goAds(){
-    klik = true;
-    window.location.href = IKLAN;
-}
-
-document.addEventListener("visibilitychange",()=>{
-    if(document.visibilityState==="visible" && klik){
-        showPage("page4");
-        klik=false;
-    }
-});
-
-// ONLINE COUNTER
-setInterval(()=>{
-    let num = 1000 + Math.floor(Math.random()*500);
-    document.getElementById("online").innerText = "👥 " + num + " online";
-},2000);
-
-// POPUP JUMLAH ORANG
-setInterval(()=>{
-    let jumlah = Math.floor(Math.random()*7)+1;
-    let el = document.getElementById("popup");
-
-    el.innerText = jumlah + " orang baru saja vote";
-    el.classList.add("show");
-
-    setTimeout(()=>el.classList.remove("show"),2000);
-},3000);
-
-// NAV
-function goBack(){ alert("Akses ditolak"); }
-function goTG(){ window.location.href = TELEGRAM; }
-
-function showPage(id){
-    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
-}
-
-</script>
 
 </body>
 </html>
