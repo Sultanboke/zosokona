@@ -3,181 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Video Gallery</title>
+<title>Telebokep Gallery</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-* {
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:'Poppins', sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#0d0d0d;color:white;padding-top:40px;}
 
-body {
-  background:#0d0d0d;
-  color:white;
+/* STICKY */
+.sticky-banner{
+  position:fixed;top:0;width:100%;
+  background:#0088cc;color:white;
+  text-align:center;padding:8px;
+  font-size:13px;z-index:9999;
 }
+.sticky-banner a{color:#fff;font-weight:600;margin:0 5px;text-decoration:none;}
 
 /* HEADER */
-.header {
-  text-align:center;
-  padding:20px;
-  font-size:20px;
-  font-weight:700;
-  background:linear-gradient(90deg,#ff416c,#ff4b2b);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
+.header{text-align:center;padding:20px;font-size:20px;font-weight:700;
+background:linear-gradient(90deg,#ff416c,#ff4b2b);
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 
-/* TELEGRAM */
-.topbar {
-  display:flex;
-  gap:10px;
-  justify-content:center;
-  padding:10px;
-}
-
-.tg-btn {
-  padding:8px 12px;
-  border-radius:8px;
-  text-decoration:none;
-  color:white;
-  font-size:13px;
-  font-weight:500;
-  transition:0.2s;
-}
-
-.jap { background:#e11d48; }
-.indo { background:#2563eb; }
-
-.tg-btn:hover {
-  transform:scale(1.05);
-}
+/* TELEGRAM BUTTON */
+.topbar{display:flex;gap:10px;justify-content:center;padding:10px;}
+.tg-btn{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:8px;
+text-decoration:none;color:white;font-size:13px;}
+.tg-btn svg{width:16px;height:16px;fill:white;}
+.jap{background:#229ED9;}
+.indo{background:#0088cc;}
 
 /* ONLINE */
-.online {
-  text-align:center;
-  font-size:13px;
-  opacity:0.8;
-  margin-bottom:10px;
-}
+.online{text-align:center;font-size:13px;opacity:0.8;margin-bottom:10px;}
 
 /* GRID */
-.container {
-  display:grid;
-  gap:12px;
-  padding:12px;
-}
-
-@media (min-width:0px){ .container{grid-template-columns:repeat(3,1fr);} }
-@media (min-width:600px){ .container{grid-template-columns:repeat(4,1fr);} }
-@media (min-width:900px){ .container{grid-template-columns:repeat(5,1fr);} }
+.container{display:grid;gap:12px;padding:12px;}
+@media (min-width:0px){.container{grid-template-columns:repeat(3,1fr);}}
+@media (min-width:600px){.container{grid-template-columns:repeat(4,1fr);}}
+@media (min-width:900px){.container{grid-template-columns:repeat(5,1fr);}}
 
 /* CARD */
-.card {
-  background:#1a1a1a;
-  border-radius:12px;
-  overflow:hidden;
-  transition:0.3s;
-}
+.card{background:#1a1a1a;border-radius:12px;overflow:hidden;}
+.card img{width:100%;height:130px;object-fit:cover;}
 
-.card:hover {
-  transform:translateY(-3px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.6);
-}
-
-.card img {
-  width:100%;
-  height:130px;
-  object-fit:cover;
-}
-
-/* ACTION */
-.actions {
-  display:flex;
-  gap:6px;
-  padding:6px;
-}
-
-.btn {
-  flex:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:8px;
-  border-radius:8px;
-  background:#2a2a2a;
-  transition:0.2s;
-}
-
-/* PLAY */
-.play svg {
-  width:20px;
-  height:20px;
-  fill:#22c55e;
-}
-
-/* DOWNLOAD */
-.download svg {
-  width:20px;
-  height:20px;
-  stroke:#3b82f6;
-  stroke-width:2;
-  fill:none;
-}
-
-/* HOVER */
-.btn:hover {
-  transform:scale(1.1);
-}
-
-.play:hover {
-  background:#22c55e;
-}
-
-.play:hover svg {
-  fill:white;
-}
-
-.download:hover {
-  background:#3b82f6;
-}
-
-.download:hover svg {
-  stroke:white;
-}
+/* BUTTON */
+.actions{display:flex;gap:6px;padding:6px;}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;padding:8px;border-radius:8px;background:#2a2a2a;}
+.play svg{fill:#22c55e;width:20px;}
+.download svg{stroke:#3b82f6;stroke-width:2;fill:none;width:20px;}
 
 /* PAGINATION */
-.pagination {
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  padding:20px;
-}
+.pagination{display:flex;justify-content:center;gap:8px;padding:20px;}
+.page-btn{padding:8px 12px;background:#222;border-radius:6px;cursor:pointer;}
+.page-btn.active{background:#ff416c;}
 
-.page-btn {
-  padding:8px 12px;
-  background:#222;
-  border-radius:6px;
-  cursor:pointer;
-}
-
-.page-btn.active {
-  background:#ff416c;
-}
+/* POPUP */
+.popup{position:fixed;top:0;left:0;width:100%;height:100%;
+background:rgba(0,0,0,0.7);display:none;
+align-items:center;justify-content:center;z-index:9999;}
+.popup-box{background:#1a1a1a;padding:20px;border-radius:10px;text-align:center;width:80%;max-width:300px;}
+.popup-btn{display:block;margin:10px 0;padding:10px;background:#0088cc;color:white;text-decoration:none;border-radius:6px;}
 </style>
 </head>
 
 <body>
 
-<div class="header">🔥 PREMIUM VIDEO GALLERY 🔥</div>
+<!-- STICKY -->
+<div class="sticky-banner">
+🚀 Join Telegram:
+<a href="https://t.me/+3_7no00jKVg0MThl" target="_blank">Japanese</a> |
+<a href="https://t.me/+3HQz-_77y6c3ZDA9" target="_blank">Indo Viral</a>
+</div>
 
-<!-- TELEGRAM -->
+<div class="header">🔥 TELEBOKEP GALLERY 🔥</div>
+
+<!-- TELEGRAM BUTTON -->
 <div class="topbar">
-  <a href="https://t.me/+3_7no00jKVg0MThl" target="_blank" class="tg-btn jap">🇯🇵 Japanese</a>
-  <a href="https://t.me/+3HQz-_77y6c3ZDA9" target="_blank" class="tg-btn indo">🇮🇩 Indo Viral</a>
+<a href="https://t.me/+3_7no00jKVg0MThl" target="_blank" class="tg-btn jap">Japanese</a>
+<a href="https://t.me/+3HQz-_77y6c3ZDA9" target="_blank" class="tg-btn indo">Indo Viral</a>
 </div>
 
 <div class="online">🟢 <span id="onlineCount">0</span> online</div>
@@ -185,90 +88,86 @@ body {
 <div id="list" class="container"></div>
 <div id="pagination" class="pagination"></div>
 
+<!-- POPUP -->
+<div id="popup" class="popup">
+  <div class="popup-box">
+    <h3>🔥 Join Telegram</h3>
+    <a href="https://t.me/+3_7no00jKVg0MThl" target="_blank" class="popup-btn">🇯🇵 Japanese</a>
+    <a href="https://t.me/+3HQz-_77y6c3ZDA9" target="_blank" class="popup-btn">🇮🇩 Indo Viral</a>
+    <button onclick="closePopup()">Tutup</button>
+  </div>
+</div>
+
 <script>
-const perPage = 15;
-let currentPage = 1;
-let allData = [];
+const perPage=15;
+let currentPage=1;
+let allData=[];
 
 /* LOAD DATA */
-fetch('data.json?v=' + Date.now())
-.then(res => res.json())
-.then(data => {
-  allData = data.reverse();
+fetch('data.json?v='+Date.now())
+.then(res=>res.json())
+.then(data=>{
+  allData=data.reverse();
   renderPage(1);
   renderPagination();
 });
 
 /* RENDER */
 function renderPage(page){
-  const container = document.getElementById("list");
-  container.innerHTML = "";
+  const container=document.getElementById("list");
+  container.innerHTML="";
+  const start=(page-1)*perPage;
+  const items=allData.slice(start,start+perPage);
 
-  const start = (page - 1) * perPage;
-  const end = start + perPage;
-  const items = allData.slice(start, end);
-
-  items.forEach(item => {
-    container.innerHTML += `
-      <div class="card">
-        <img src="${item.img}" loading="lazy">
-        <div class="actions">
-
-          <a href="${item.link}" target="_blank" class="btn play">
-            <svg viewBox="0 0 24 24">
-              <path d="M6 4l14 8-14 8z"/>
-            </svg>
-          </a>
-
-          <a href="${item.link}" target="_blank" class="btn download">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 4v10m0 0l-4-4m4 4l4-4M5 20h14"/>
-            </svg>
-          </a>
-
-        </div>
+  items.forEach(item=>{
+    container.innerHTML+=`
+    <div class="card">
+      <img src="${item.img}" loading="lazy">
+      <div class="actions">
+        <a href="${item.link}" target="_blank" class="btn play">
+          <svg viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg>
+        </a>
+        <a href="${item.link}" target="_blank" class="btn download">
+          <svg viewBox="0 0 24 24"><path d="M12 4v10m0 0l-4-4m4 4l4-4M5 20h14"/></svg>
+        </a>
       </div>
-    `;
+    </div>`;
   });
 
-  currentPage = page;
+  currentPage=page;
   updateActive();
 }
 
 /* PAGINATION */
 function renderPagination(){
-  const totalPages = Math.ceil(allData.length / perPage);
-  const pagination = document.getElementById("pagination");
-
-  pagination.innerHTML = "";
-
-  for(let i = 1; i <= totalPages; i++){
-    pagination.innerHTML += `
-      <div class="page-btn" onclick="renderPage(${i})">${i}</div>
-    `;
+  const totalPages=Math.ceil(allData.length/perPage);
+  const pagination=document.getElementById("pagination");
+  pagination.innerHTML="";
+  for(let i=1;i<=totalPages;i++){
+    pagination.innerHTML+=`<div class="page-btn" onclick="renderPage(${i})">${i}</div>`;
   }
 }
-
 function updateActive(){
-  document.querySelectorAll(".page-btn").forEach((btn, i) => {
-    btn.classList.toggle("active", i+1 === currentPage);
+  document.querySelectorAll(".page-btn").forEach((btn,i)=>{
+    btn.classList.toggle("active",i+1===currentPage);
   });
 }
 
-/* FAKE ONLINE */
-let online = Math.floor(Math.random() * 200) + 80;
+/* ONLINE */
+let online=Math.floor(Math.random()*200)+80;
+setInterval(()=>{
+  online+=Math.floor(Math.random()*10)-5;
+  if(online<30) online=30;
+  document.getElementById("onlineCount").innerText=online;
+},2000);
 
-function updateOnline() {
-  let change = Math.floor(Math.random() * 10) - 5;
-  online += change;
-
-  if (online < 30) online = 30;
-
-  document.getElementById("onlineCount").innerText = online;
+/* POPUP */
+function closePopup(){
+  document.getElementById("popup").style.display="none";
 }
-
-setInterval(updateOnline, 2000);
-updateOnline();
+setTimeout(()=>{
+  document.getElementById("popup").style.display="flex";
+},2000);
 </script>
 
 </body>
