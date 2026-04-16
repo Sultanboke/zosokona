@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Video Download</title>
 
-<!-- FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -17,17 +16,17 @@
 }
 
 body {
-  background: #0f0f0f;
-  color: white;
+  background:#0f0f0f;
+  color:white;
 }
 
 /* HEADER */
 .header {
   text-align:center;
-  padding:20px;
-  font-size:22px;
+  padding:15px;
+  font-size:18px;
   font-weight:700;
-  background: linear-gradient(45deg,#ff416c,#ff4b2b);
+  background:linear-gradient(45deg,#ff416c,#ff4b2b);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
@@ -35,54 +34,60 @@ body {
 /* GRID */
 .container {
   display:grid;
-  gap:20px;
-  padding:15px;
+  gap:10px;
+  padding:10px;
 }
 
-@media (min-width:0px){ .container{grid-template-columns:1fr;} }
-@media (min-width:600px){ .container{grid-template-columns:repeat(2,1fr);} }
-@media (min-width:900px){ .container{grid-template-columns:repeat(3,1fr);} }
+/* 📱 HP = 3 kolom */
+@media (min-width:0px){
+  .container { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* 💻 Tablet */
+@media (min-width:600px){
+  .container { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* 🖥 Desktop */
+@media (min-width:900px){
+  .container { grid-template-columns: repeat(5, 1fr); }
+}
 
 /* CARD */
 .card {
   background:#1a1a1a;
-  border-radius:15px;
+  border-radius:10px;
   overflow:hidden;
-  box-shadow:0 5px 15px rgba(0,0,0,0.5);
-  transition:0.3s;
-}
-
-.card:hover {
-  transform:scale(1.03);
 }
 
 .card img {
   width:100%;
-  display:block;
+  height:120px;
+  object-fit:cover;
 }
 
-/* BUTTON */
+/* BUTTON AREA */
+.actions {
+  display:flex;
+  gap:5px;
+  padding:5px;
+}
+
 .btn {
-  display:block;
-  margin:10px;
-  padding:12px;
+  flex:1;
+  font-size:12px;
+  padding:6px;
   text-align:center;
   background:linear-gradient(45deg,#ff416c,#ff4b2b);
   color:white;
   text-decoration:none;
-  border-radius:8px;
-  font-weight:500;
-  transition:0.3s;
-}
-
-.btn:hover {
-  opacity:0.8;
+  border-radius:5px;
 }
 
 /* LOADING */
 .loading {
   text-align:center;
-  padding:50px;
+  padding:30px;
   opacity:0.7;
 }
 </style>
@@ -93,34 +98,31 @@ body {
 <div class="header">🔥 VIDEO DOWNLOAD 🔥</div>
 
 <div id="list" class="container"></div>
-
 <div id="loading" class="loading">Loading...</div>
 
 <script>
-fetch('data.json?v=' + Date.now()) // 🔥 anti cache
-  .then(res => res.json())
-  .then(data => {
+fetch('data.json?v=' + Date.now())
+.then(res => res.json())
+.then(data => {
 
-    data.reverse(); // terbaru di atas
+  data.reverse();
 
-    const container = document.getElementById("list");
-    const loading = document.getElementById("loading");
+  const container = document.getElementById("list");
+  document.getElementById("loading").style.display = "none";
 
-    loading.style.display = "none";
-
-    data.forEach(item => {
-      container.innerHTML += `
-        <div class="card">
-          <img src="${item.img}" loading="lazy">
-          <a href="${item.link}" class="btn">DOWNLOAD</a>
+  data.forEach(item => {
+    container.innerHTML += `
+      <div class="card">
+        <img src="${item.img}" loading="lazy">
+        <div class="actions">
+          <a href="${item.link}" target="_blank" class="btn">WATCH</a>
+          <a href="${item.link}" target="_blank" class="btn">DOWNLOAD</a>
         </div>
-      `;
-    });
-
-  })
-  .catch(() => {
-    document.getElementById("loading").innerText = "Gagal load data";
+      </div>
+    `;
   });
+
+});
 </script>
 
 </body>
