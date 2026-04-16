@@ -2,8 +2,10 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Video Download</title>
 
+<!-- FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -95,12 +97,11 @@ body {
 <div id="loading" class="loading">Loading...</div>
 
 <script>
-fetch('data.json')
+fetch('data.json?v=' + Date.now()) // 🔥 anti cache
   .then(res => res.json())
   .then(data => {
 
-    // 🔥 terbaru di atas
-    data.reverse();
+    data.reverse(); // terbaru di atas
 
     const container = document.getElementById("list");
     const loading = document.getElementById("loading");
