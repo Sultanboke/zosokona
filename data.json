@@ -1,6 +1,7 @@
 [
   {
-    "img": "https://i.ibb.co/C3GCvt1X/Tb1.jpg", "https://1024terabox.com/s/1cemjooznX1OEZ20ckMhVQA"
+    "img": "https://i.ibb.co/C3GCvt1X/Tb1.jpg",
+    "link": "https://1024terabox.com/s/1cemjooznX1OEZ20ckMhVQA"
   },
   {
     "img": "https://i.ibb.co/chQS4FTY/Tb2.jpg",
@@ -22,16 +23,16 @@
     "img": "https://i.ibb.co/rGqk6RXm/Tb5.jpg",
     "link": "https://1024terabox.com/s/1Cl5PxXhPrH68H88o_ApDpw"
   },
-{
-  "img": "https://i.ibb.co/ksT18H7h/Tb6.jpg",
-  "link": "https://1024terabox.com/s/1y-5kL12KxahQfObJvptUSA"
-},
-{
-  "img": "https://i.ibb.co/4ZCKCsQz/Tb7.jpg",
-  "link": "https://1024terabox.com/s/1wqgR-7q7vtJ8rOtzNZgV_w"
-},
-{
-  "img": "https://i.ibb.co/Ng5FHTwD/Tb8.jpg",
-  "link": "https://1024terabox.com/s/1G_S5ANGwArJtBBLGYZBKqg"
-}
+  {
+    "img": "https://i.ibb.co/ksT18H7h/Tb6.jpg",
+    "link": "https://1024terabox.com/s/1y-5kL12KxahQfObJvptUSA"
+  },
+  {
+    "img": "https://i.ibb.co/4ZCKCsQz/Tb7.jpg",
+    "link": "https://1024terabox.com/s/1wqgR-7q7vtJ8rOtzNZgV_w"
+  },
+  {
+    "img": "https://i.ibb.co/Ng5FHTwD/Tb8.jpg",
+    "link": "https://1024terabox.com/s/1G_S5ANGwArJtBBLGYZBKqg"
+  }
 ]
