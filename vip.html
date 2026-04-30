@@ -2,33 +2,41 @@
 <html>
 <head>
   <title>VIP Access</title>
-  <style>
-    body {
-      font-family: Arial;
-      text-align: center;
-      background: #000;
-      color: white;
-      padding-top: 100px;
-    }
-    button {
-      padding: 15px 30px;
-      font-size: 18px;
-      background: #0088cc;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      cursor: pointer;
-    }
-  </style>
 </head>
-<body>
+<body style="text-align:center; font-family:Arial; background:#000; color:white; padding-top:100px;">
 
-<h1>✅ Pembayaran Berhasil</h1>
-<p>Silakan join grup VIP di bawah ini:</p>
+<h2>🔐 Ambil Akses VIP</h2>
 
-<a href="https://t.me/+nYtXYGm--r85OWVl">
-  <button>Join Grup VIP</button>
+<p>Step 1: Klik tombol di bawah untuk ambil kode</p>
+
+<a href="https://t.me/telebokepcombot">
+  <button style="padding:15px;">Ambil Kode di Telegram</button>
 </a>
+
+<br><br>
+
+<p>Step 2: Masukkan kode dari bot</p>
+
+<input type="text" id="code" placeholder="Masukkan kode">
+<br><br>
+
+<button onclick="cek()" style="padding:10px;">Masuk VIP</button>
+
+<p id="result"></p>
+
+<script>
+function cek() {
+  var kode = document.getElementById("code").value;
+
+  if (kode === "VIP2024") {
+    document.getElementById("result").innerHTML =
+    "✅ Akses diterima!<br><br><a href='https://t.me/+nYtXYGm--r85OWVl'>👉 Masuk Grup VIP</a>";
+  } else {
+    document.getElementById("result").innerHTML =
+    "❌ Kode salah, ambil dari bot dulu";
+  }
+}
+</script>
 
 </body>
 </html>
