@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crypto Payment</title>
+<title>Crypto Checkout</title>
 
 <style>
 body {
@@ -27,7 +27,7 @@ body {
 }
 
 h2 {
-  margin-bottom:10px;
+  margin-bottom:5px;
 }
 
 .status {
@@ -38,7 +38,6 @@ h2 {
 
 .qr img {
   width:180px;
-  border-radius:10px;
 }
 
 .wallet {
@@ -47,7 +46,7 @@ h2 {
   border-radius:10px;
   font-size:12px;
   word-break:break-all;
-  margin-top:15px;
+  margin-top:10px;
   color:#0f0;
 }
 
@@ -73,7 +72,28 @@ button {
 .timer {
   margin-top:10px;
   color:#ff5252;
-  font-size:16px;
+}
+
+.progress {
+  height:6px;
+  background:#222;
+  border-radius:10px;
+  margin-top:15px;
+  overflow:hidden;
+  display:none;
+}
+
+.bar {
+  height:100%;
+  width:0%;
+  background:#00ffa6;
+}
+
+.log {
+  margin-top:10px;
+  font-size:12px;
+  color:#aaa;
+  min-height:20px;
 }
 </style>
 </head>
@@ -83,8 +103,8 @@ button {
 <div class="container">
   <div class="card">
 
-    <h2>💳 Crypto Payment</h2>
-    <div class="status">Send exact amount within time</div>
+    <h2>💳 Secure Crypto Checkout</h2>
+    <div class="status">Powered by Blockchain Network</div>
 
     <div class="qr">
       <img src="qr.png">
@@ -98,14 +118,19 @@ button {
 
     <div class="timer" id="timer">05:00</div>
 
-    <button class="pay" onclick="paid()">I HAVE PAID</button>
+    <button class="pay" onclick="startVerify()">I HAVE PAID</button>
+
+    <div class="progress" id="progress">
+      <div class="bar" id="bar"></div>
+    </div>
+
+    <div class="log" id="log"></div>
 
   </div>
 </div>
 
 <script>
 let time = 300;
-
 setInterval(()=>{
   let m = Math.floor(time/60);
   let s = time%60;
@@ -116,11 +141,45 @@ setInterval(()=>{
 
 function copyWallet(){
   navigator.clipboard.writeText("TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf");
-  alert("Copied");
+  alert("Address copied");
 }
 
-function paid(){
-  window.location.href="vip.html";
+function startVerify(){
+  let log = document.getElementById("log");
+  let bar = document.getElementById("bar");
+  let progress = document.getElementById("progress");
+
+  progress.style.display="block";
+
+  let steps = [
+    "🔍 Detecting transaction...",
+    "📡 Connecting to TRON network...",
+    "⛓️ Transaction found",
+    "⚡ Confirming (1/3)...",
+    "⚡ Confirming (2/3)...",
+    "⚡ Confirming (3/3)...",
+    "✅ Payment confirmed"
+  ];
+
+  let i = 0;
+  let width = 0;
+
+  let interval = setInterval(()=>{
+    log.innerHTML = steps[i];
+    width += 15;
+    bar.style.width = width + "%";
+
+    i++;
+
+    if(i >= steps.length){
+      clearInterval(interval);
+
+      setTimeout(()=>{
+        window.location.href="vip.html";
+      },1500);
+    }
+
+  },1200);
 }
 </script>
 
