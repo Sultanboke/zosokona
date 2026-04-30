@@ -1,174 +1,71 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VIP Dashboard</title>
+<title>VIP Access</title>
 
 <style>
 body {
   margin:0;
   font-family:'Segoe UI', sans-serif;
-  background:#0a0a0a;
+  background:#0b0b0b;
   color:white;
-}
-
-.container {
-  max-width:420px;
-  margin:auto;
-  padding:20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
 }
 
 .card {
   background:#121212;
-  padding:25px;
+  padding:30px;
   border-radius:18px;
   text-align:center;
-  box-shadow:0 0 25px rgba(0,255,150,0.08);
+  width:90%;
+  max-width:380px;
+  box-shadow:0 0 30px rgba(0,255,150,0.1);
 }
 
-h2 {
-  margin-bottom:10px;
+h1 {
+  font-size:22px;
 }
 
-.status {
-  font-size:13px;
+p {
+  font-size:14px;
   color:#aaa;
-  margin-bottom:15px;
 }
 
 button {
   width:100%;
-  padding:14px;
+  padding:15px;
   border:none;
   border-radius:10px;
-  margin-top:10px;
-  font-size:15px;
-}
-
-.telegram {
-  background:#0088cc;
-  color:white;
-}
-
-.unlock {
   background:linear-gradient(135deg,#00ffa6,#00c853);
   color:black;
-}
-
-input {
-  width:100%;
-  padding:12px;
-  border-radius:10px;
-  border:none;
-  margin-top:10px;
-  background:#000;
-  color:white;
-  text-align:center;
-}
-
-.loader {
-  display:none;
-  margin-top:15px;
-}
-
-.loader span {
-  display:inline-block;
-  width:8px;
-  height:8px;
-  background:#00ffa6;
-  border-radius:50%;
-  margin:3px;
-  animation:bounce 1s infinite;
-}
-
-.loader span:nth-child(2){animation-delay:0.2s;}
-.loader span:nth-child(3){animation-delay:0.4s;}
-
-@keyframes bounce {
-  0%,80%,100% {transform:scale(0);}
-  40% {transform:scale(1);}
-}
-
-.success {
-  margin-top:15px;
-  color:#00ffa6;
-  font-size:14px;
-}
-
-.lock {
-  font-size:40px;
-  margin:10px 0;
+  font-size:16px;
+  margin-top:20px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-  <div class="card">
+<div class="card">
+  <h1>💎 VIP ACCESS</h1>
 
-    <div class="lock">🔒</div>
+  <p>Secure crypto payment gateway</p>
 
-    <h2>VIP ACCESS LOCKED</h2>
-    <div class="status">Verification required</div>
+  <p style="margin-top:15px;">
+  🔒 Blockchain secured<br>
+  ⚡ Instant access after verification
+  </p>
 
-    <p>Get your access code via Telegram</p>
-
-    <a href="https://t.me/telebokepcombot">
-      <button class="telegram">Get Code</button>
-    </a>
-
-    <input type="text" id="code" placeholder="Enter VIP Code">
-
-    <button class="unlock" onclick="unlock()">Unlock Access</button>
-
-    <div class="loader" id="loader">
-      Verifying...
-      <br>
-      <span></span><span></span><span></span>
-    </div>
-
-    <div id="result"></div>
-
-  </div>
+  <button onclick="goPay()">Proceed to Payment</button>
 </div>
 
 <script>
-let unlocked = false;
-
-function unlock(){
-
-  if(unlocked) return;
-
-  let code = document.getElementById("code").value;
-
-  if(code.length < 3){
-    alert("Invalid code");
-    return;
-  }
-
-  document.getElementById("loader").style.display="block";
-
-  setTimeout(()=>{
-
-    if(code === "VIP2024"){
-      unlocked = true;
-
-      document.querySelector(".lock").innerHTML = "🔓";
-
-      document.getElementById("result").innerHTML =
-      "<div class='success'>Access Granted</div><br>" +
-      "<a href='https://t.me/+nYtXYGm--r85OWVl' style='color:#00ffa6;'>ENTER VIP GROUP</a>";
-
-    } else {
-      document.getElementById("result").innerHTML =
-      "<div style='color:red'>Invalid Code</div>";
-    }
-
-    document.getElementById("loader").style.display="none";
-
-  },2500);
+function goPay(){
+  window.location.href="payment.html";
 }
 </script>
 
