@@ -13,7 +13,6 @@ body {
   color:#eaecef;
 }
 
-/* HEADER */
 .header {
   padding:15px;
   font-size:18px;
@@ -21,14 +20,12 @@ body {
   border-bottom:1px solid #222;
 }
 
-/* CONTAINER */
 .container {
   max-width:420px;
   margin:auto;
   padding:15px;
 }
 
-/* CARD */
 .card {
   background:#1e2329;
   padding:20px;
@@ -36,7 +33,6 @@ body {
   margin-bottom:15px;
 }
 
-/* TEXT */
 .label {
   font-size:12px;
   color:#848e9c;
@@ -57,7 +53,6 @@ body {
   font-weight:bold;
 }
 
-/* INPUT */
 input {
   width:100%;
   padding:12px;
@@ -67,9 +62,9 @@ input {
   background:#0b0e11;
   color:white;
   text-align:center;
+  font-size:16px;
 }
 
-/* BUTTON */
 button {
   width:100%;
   padding:14px;
@@ -88,9 +83,9 @@ button {
 .telegram {
   background:#0088cc;
   color:white;
+  font-weight:bold;
 }
 
-/* RESULT */
 .result {
   margin-top:15px;
   font-size:14px;
@@ -107,16 +102,16 @@ button {
   <!-- STATUS -->
   <div class="card">
     <div class="label">Account Status</div>
-    <div class="value status">Locked 🔒</div>
+    <div class="value status" id="accountStatus">Locked 🔒</div>
   </div>
 
-  <!-- ORDER -->
+  <!-- PRODUCT -->
   <div class="card">
     <div class="label">Product</div>
     <div class="value">VIP Access</div>
 
     <div class="label" style="margin-top:10px;">Payment Status</div>
-    <div class="value">Waiting Verification</div>
+    <div class="value" id="paymentStatus">Waiting Verification ⏳</div>
   </div>
 
   <!-- BOT -->
@@ -144,15 +139,41 @@ button {
 
 <script>
 function unlock(){
+
   let code = document.getElementById("code").value;
+  let result = document.getElementById("result");
+  let accountStatus = document.getElementById("accountStatus");
+  let paymentStatus = document.getElementById("paymentStatus");
 
   if(code === "VIP2024"){
-    document.getElementById("result").innerHTML =
-    "<div class='success'>Access Granted ✅</div><br>" +
-    "<a href='https://t.me/+nYtXYGm--r85OWVl' style='color:#0ecb81;'>Enter VIP Group</a>";
+
+    // animasi verifikasi
+    paymentStatus.innerHTML = "Verifying... ⏳";
+
+    let dots = 0;
+    let loading = setInterval(()=>{
+      dots++;
+      paymentStatus.innerHTML = "Verifying" + ".".repeat(dots % 4) + " ⏳";
+    },400);
+
+    setTimeout(()=>{
+      clearInterval(loading);
+
+      paymentStatus.innerHTML = "Verified ✅";
+      accountStatus.innerHTML = "Unlocked 🔓";
+
+      result.innerHTML =
+      "<div class='success'>Verification Success ✅</div><br>" +
+      "<a href='https://t.me/+nYtXYGm--r85OWVl'>" +
+      "<button class='telegram'>🚀 Join VIP Telegram</button></a>";
+
+    },1800);
+
   } else {
-    document.getElementById("result").innerHTML =
-    "<div style='color:#f6465d;'>Invalid Code</div>";
+
+    result.innerHTML =
+    "<div style='color:#f6465d;'>Invalid Code ❌</div>";
+
   }
 }
 </script>
