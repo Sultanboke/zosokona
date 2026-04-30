@@ -2,27 +2,39 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>VIP Access</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIP Dashboard</title>
 
 <style>
 body {
   margin:0;
   font-family:'Segoe UI', sans-serif;
-  background: linear-gradient(135deg,#000,#121212);
-  color:#fff;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
+  background:#0a0a0a;
+  color:white;
+}
+
+.container {
+  max-width:420px;
+  margin:auto;
+  padding:20px;
 }
 
 .card {
-  background:#111;
-  padding:40px;
-  border-radius:20px;
-  width:350px;
+  background:#121212;
+  padding:25px;
+  border-radius:18px;
   text-align:center;
-  box-shadow:0 0 30px rgba(0,136,255,0.1);
+  box-shadow:0 0 25px rgba(0,255,150,0.08);
+}
+
+h2 {
+  margin-bottom:10px;
+}
+
+.status {
+  font-size:13px;
+  color:#aaa;
+  margin-bottom:15px;
 }
 
 button {
@@ -31,17 +43,16 @@ button {
   border:none;
   border-radius:10px;
   margin-top:10px;
-  cursor:pointer;
   font-size:15px;
 }
 
-.btn-telegram {
+.telegram {
   background:#0088cc;
   color:white;
 }
 
-.btn-access {
-  background:#00ffae;
+.unlock {
+  background:linear-gradient(135deg,#00ffa6,#00c853);
   color:black;
 }
 
@@ -50,46 +61,114 @@ input {
   padding:12px;
   border-radius:10px;
   border:none;
-  margin-top:15px;
+  margin-top:10px;
   background:#000;
   color:white;
+  text-align:center;
 }
 
-.result {
+.loader {
+  display:none;
   margin-top:15px;
+}
+
+.loader span {
+  display:inline-block;
+  width:8px;
+  height:8px;
+  background:#00ffa6;
+  border-radius:50%;
+  margin:3px;
+  animation:bounce 1s infinite;
+}
+
+.loader span:nth-child(2){animation-delay:0.2s;}
+.loader span:nth-child(3){animation-delay:0.4s;}
+
+@keyframes bounce {
+  0%,80%,100% {transform:scale(0);}
+  40% {transform:scale(1);}
+}
+
+.success {
+  margin-top:15px;
+  color:#00ffa6;
+  font-size:14px;
+}
+
+.lock {
+  font-size:40px;
+  margin:10px 0;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h2>🔐 Akses VIP</h2>
+<div class="container">
+  <div class="card">
 
-  <p>Ambil kode akses melalui Telegram</p>
+    <div class="lock">🔒</div>
 
-  <a href="https://t.me/telebokepcombot">
-    <button class="btn-telegram">Ambil Kode</button>
-  </a>
+    <h2>VIP ACCESS LOCKED</h2>
+    <div class="status">Verification required</div>
 
-  <input type="text" id="code" placeholder="Masukkan kode VIP">
+    <p>Get your access code via Telegram</p>
 
-  <button class="btn-access" onclick="cek()">Masuk VIP</button>
+    <a href="https://t.me/telebokepcombot">
+      <button class="telegram">Get Code</button>
+    </a>
 
-  <div class="result" id="result"></div>
+    <input type="text" id="code" placeholder="Enter VIP Code">
+
+    <button class="unlock" onclick="unlock()">Unlock Access</button>
+
+    <div class="loader" id="loader">
+      Verifying...
+      <br>
+      <span></span><span></span><span></span>
+    </div>
+
+    <div id="result"></div>
+
+  </div>
 </div>
 
 <script>
-function cek() {
-  var kode = document.getElementById("code").value;
+let unlocked = false;
 
-  if (kode === "VIP2024") {
-    document.getElementById("result").innerHTML =
-    "✅ Akses berhasil<br><br><a href='https://t.me/+nYtXYGm--r85OWVl' style='color:#00ffae;'>Masuk Grup VIP</a>";
-  } else {
-    document.getElementById("result").innerHTML =
-    "❌ Kode salah";
+function unlock(){
+
+  if(unlocked) return;
+
+  let code = document.getElementById("code").value;
+
+  if(code.length < 3){
+    alert("Invalid code");
+    return;
   }
+
+  document.getElementById("loader").style.display="block";
+
+  setTimeout(()=>{
+
+    if(code === "VIP2024"){
+      unlocked = true;
+
+      document.querySelector(".lock").innerHTML = "🔓";
+
+      document.getElementById("result").innerHTML =
+      "<div class='success'>Access Granted</div><br>" +
+      "<a href='https://t.me/+nYtXYGm--r85OWVl' style='color:#00ffa6;'>ENTER VIP GROUP</a>";
+
+    } else {
+      document.getElementById("result").innerHTML =
+      "<div style='color:red'>Invalid Code</div>";
+    }
+
+    document.getElementById("loader").style.display="none";
+
+  },2500);
 }
 </script>
 
