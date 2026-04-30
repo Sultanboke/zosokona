@@ -1,96 +1,135 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>VIP Access</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VIP Access</title>
 
-    .card {
-      background: #111;
-      padding: 40px;
-      border-radius: 20px;
-      width: 350px;
-      text-align: center;
-      box-shadow: 0 0 30px rgba(0,255,150,0.1);
-      border: 1px solid rgba(255,255,255,0.05);
-    }
+<style>
+body {
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background:#0f0f0f;
+  color:white;
+}
 
-    h1 {
-      margin-bottom: 10px;
-      font-size: 26px;
-    }
+.container {
+  padding:20px;
+  max-width:400px;
+  margin:auto;
+  text-align:center;
+}
 
-    .price {
-      font-size: 22px;
-      color: #00ffae;
-      margin-bottom: 20px;
-    }
+.card {
+  background:#1a1a1a;
+  padding:25px;
+  border-radius:15px;
+  box-shadow:0 0 20px rgba(0,255,150,0.1);
+}
 
-    .wallet {
-      background: #000;
-      padding: 10px;
-      border-radius: 10px;
-      font-size: 13px;
-      word-break: break-all;
-      margin-bottom: 20px;
-      color: #0f0;
-    }
+h1 {
+  font-size:22px;
+}
 
-    button {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #00ffae, #00c853);
-      color: black;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: 0.3s;
-    }
+.price {
+  color:#00ffae;
+  font-size:18px;
+  margin-bottom:15px;
+}
 
-    button:hover {
-      opacity: 0.9;
-    }
+.wallet {
+  background:#000;
+  padding:10px;
+  border-radius:10px;
+  font-size:13px;
+  word-break:break-all;
+  margin:15px 0;
+  color:#0f0;
+}
 
-    .info {
-      font-size: 13px;
-      margin-top: 15px;
-      color: #aaa;
-    }
-  </style>
+button {
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#00ffae;
+  color:black;
+  font-size:15px;
+  margin-top:10px;
+}
+
+.timer {
+  margin-top:15px;
+  font-size:16px;
+  color:#ff5252;
+}
+
+.success {
+  color:#00ffae;
+  margin-top:10px;
+}
+</style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>🔥 VIP ACCESS</h1>
-  <div class="price">$5 Access</div>
+<div class="container">
+  <div class="card">
 
-  <p>Kirim USDT (TRC20) ke:</p>
-  <div class="wallet">TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf</div>
+    <h1>🔥 VIP ACCESS</h1>
+    <div class="price">$5 (USDT TRC20)</div>
 
-  <button onclick="lanjut()">Saya Sudah Bayar</button>
+    <p>Kirim ke alamat:</p>
+    <div class="wallet" id="wallet">
+      TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf
+    </div>
 
-  <div class="info">
-    Pembayaran diverifikasi secara aman<br>
-    Akses diberikan dalam hitungan detik
+    <button onclick="copyWallet()">Copy Wallet</button>
+
+    <div class="timer" id="timer">Waktu: 05:00</div>
+
+    <button onclick="bayar()">Saya Sudah Bayar</button>
+
+    <div id="status"></div>
+
   </div>
 </div>
 
 <script>
-function lanjut() {
-  window.location.href = "vip.html";
+let time = 300; // 5 menit
+
+let countdown = setInterval(function() {
+  let minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+
+  document.getElementById("timer").innerHTML =
+    "Waktu: " + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+
+  time--;
+
+  if (time < 0) {
+    clearInterval(countdown);
+    document.getElementById("timer").innerHTML = "❌ Waktu habis, ulangi pembayaran";
+  }
+}, 1000);
+
+function copyWallet() {
+  navigator.clipboard.writeText("TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf");
+  alert("Wallet berhasil di-copy!");
+}
+
+function bayar() {
+  if (time <= 0) {
+    alert("Waktu sudah habis!");
+    return;
+  }
+
+  document.getElementById("status").innerHTML =
+    "<div class='success'>✅ Pembayaran berhasil diverifikasi</div>";
+
+  setTimeout(() => {
+    window.location.href = "vip.html";
+  }, 1500);
 }
 </script>
 
