@@ -3,282 +3,49 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VIP Access</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
 <style>
-body{
-  margin:0;
-  background:#0b0f1a;
-  font-family:'Inter', sans-serif;
-  color:white;
-}
-
-/* CONTAINER */
-.container{
-  max-width:420px;
-  margin:auto;
-  padding:20px;
-}
-
-/* SMOOTH PAGE */
-.page{
-  opacity:0;
-  transform:translateY(10px);
-  transition:all 0.4s ease;
-  display:none;
-}
-
-.page.active{
-  opacity:1;
-  transform:translateY(0);
-  display:block;
-}
-
-/* CARD */
-.card{
-  background:linear-gradient(145deg,#111827,#1f2937);
-  padding:18px;
-  border-radius:16px;
-  margin-bottom:14px;
-}
-
-/* TEXT */
-.title{
-  font-size:20px;
-  font-weight:600;
-  margin-bottom:8px;
-}
-
-.desc{
-  font-size:13px;
-  color:#9ca3af;
-  margin-bottom:12px;
-}
-
-.price{
-  font-size:28px;
-  font-weight:600;
-  margin-bottom:4px;
-}
-
-.sub{
-  font-size:12px;
-  color:#9ca3af;
-}
-
-/* BUTTON */
-.btn{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:12px;
-  font-size:14px;
-  font-weight:600;
-  margin-top:12px;
-  cursor:pointer;
-}
-
-.btn-primary{
-  background:#facc15;
-  color:black;
-}
-
-.btn-dark{
-  background:#111827;
-  color:white;
-}
-
-.btn-telegram{
-  background:#0088cc;
-  color:white;
-}
-
-/* INPUT */
-.input{
-  width:100%;
-  height:44px;
-  border-radius:10px;
-  border:none;
-  padding:0 12px;
-  background:#020617;
-  color:white;
-  margin-top:10px;
-}
-
-/* STATUS */
-.status{
-  font-weight:600;
-}
-
-.locked{color:#facc15;}
-.unlocked{color:#00e676;}
-
-.loading{
-  animation:blink 1s infinite;
-}
-
-@keyframes blink{
-  0%{opacity:1;}
-  50%{opacity:0.4;}
-  100%{opacity:1;}
-}
-
-.timer{
-  color:#facc15;
-  font-size:13px;
-  margin-top:6px;
-}
+body{margin:0;background:#0b0f1a;color:#fff;font-family:'Inter',sans-serif}
+.container{max-width:420px;margin:auto;padding:20px}
+.logo{font-size:18px;font-weight:600;opacity:.9;margin-bottom:28px}
+.card{background:linear-gradient(145deg,#111827,#1f2937);padding:20px;border-radius:16px}
+.title{font-size:20px;font-weight:600;margin-bottom:8px}
+.desc{font-size:13px;color:#9ca3af;margin-bottom:14px}
+.price{font-size:26px;font-weight:600;margin-bottom:4px}
+.price span{font-size:13px;color:#9ca3af}
+.list{font-size:13px;color:#d1d5db;margin:14px 0}
+.list div{margin:6px 0}
+.btn{width:100%;padding:14px;border:0;border-radius:12px;font-weight:600;cursor:pointer}
+.btn-primary{background:#facc15;color:#000}
+.footer{text-align:center;font-size:12px;color:#6b7280;margin-top:18px}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
-<!-- 🔥 LANDING -->
-<div id="landing" class="page active">
+  <div class="logo">VIP Access</div>
 
   <div class="card">
-    <div class="title">VIP Access</div>
-    <div class="desc">Unlock premium private content</div>
+    <div class="title">Unlock Premium Content</div>
+    <div class="desc">Private access via crypto payment. Fast & simple.</div>
 
-    <div class="price">2 USDT</div>
-    <div class="sub">One-time payment • Instant access</div>
+    <div class="price">2 USDT <span>/ one-time</span></div>
 
-    <button class="btn btn-primary" onclick="go('payment')">
-      Continue
-    </button>
-  </div>
-
-</div>
-
-<!-- 💳 PAYMENT -->
-<div id="payment" class="page">
-
-  <div class="card">
-    <div class="title">Secure Checkout</div>
-
-    <div class="desc">Send exact amount</div>
-
-    <div style="font-size:16px;font-weight:600;">
-      2 USDT (TRC20)
+    <div class="list">
+      <div>✔ Full VIP Access</div>
+      <div>✔ Private Telegram Group</div>
+      <div>✔ One-time payment</div>
     </div>
 
-    <div style="margin-top:10px;font-size:12px;color:#9ca3af;">
-      Wallet Address
-    </div>
-
-    <div style="margin-top:5px;font-size:12px;background:#020617;padding:10px;border-radius:10px;">
-      TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf
-    </div>
-
-    <button class="btn btn-dark" onclick="copy()">
-      Copy Address
-    </button>
-
-    <div id="timer" class="timer">05:00</div>
-
-    <button class="btn btn-primary" onclick="go('vip')">
-      I Have Paid
-    </button>
-
+    <button class="btn btn-primary" onclick="goPayment()">Continue Payment</button>
   </div>
 
-</div>
-
-<!-- 🔐 VIP -->
-<div id="vip" class="page">
-
-  <div class="card">
-    <div>Account Status</div>
-    <div id="accStatus" class="status locked">Locked 🔒</div>
-  </div>
-
-  <div class="card">
-    <div>Payment Status</div>
-    <div id="payStatus" class="loading">Waiting Verification ⏳</div>
-  </div>
-
-  <div class="card">
-    <div>Get Code</div>
-    <button class="btn btn-telegram"
-    onclick="window.open('https://t.me/telebokepcombot')">
-      Open Telegram Bot
-    </button>
-  </div>
-
-  <div class="card">
-    <div>Enter Code</div>
-
-    <input id="code" class="input" placeholder="Enter code">
-
-    <button class="btn btn-primary" onclick="unlock()">
-      Unlock Access
-    </button>
-
-    <div id="success" style="display:none;">
-      <div style="color:#00e676;margin-top:10px;">Access Granted</div>
-
-      <button class="btn btn-telegram"
-      onclick="window.open('https://t.me/+nYtXYGm--r85OWVl')">
-        Join VIP
-      </button>
-    </div>
-
-  </div>
-
-</div>
-
+  <div class="footer">Secure payment • Private access • Instant unlock after verification</div>
 </div>
 
 <script>
-
-/* PAGE SWITCH (SMOOTH) */
-function go(page){
-  document.querySelectorAll('.page').forEach(p=>{
-    p.classList.remove('active');
-  });
-
-  setTimeout(()=>{
-    document.getElementById(page).classList.add('active');
-  },50);
+function goPayment(){
+  window.location.href = "payment.html";
 }
-
-/* COPY */
-function copy(){
-  navigator.clipboard.writeText("TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf");
-  alert("Copied");
-}
-
-/* TIMER */
-let time = 300;
-setInterval(()=>{
-  let m=Math.floor(time/60);
-  let s=time%60;
-  document.getElementById("timer").innerHTML =
-  m+":"+(s<10?"0":"")+s;
-  time--;
-},1000);
-
-/* UNLOCK */
-function unlock(){
-  let code = document.getElementById("code").value;
-
-  if(code === "VIP2024"){
-    document.getElementById("accStatus").innerHTML = "Unlocked 🔓";
-    document.getElementById("accStatus").className = "status unlocked";
-
-    document.getElementById("payStatus").innerHTML = "Verified ✅";
-    document.getElementById("payStatus").classList.remove("loading");
-
-    document.getElementById("success").style.display="block";
-  } else {
-    alert("Invalid code");
-  }
-}
-
 </script>
-
 </body>
 </html>
