@@ -1,28 +1,83 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>VIP Access</title>
+<meta charset="UTF-8">
+<title>VIP Access</title>
+
+<style>
+body {
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
+  background: linear-gradient(135deg,#000,#121212);
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.card {
+  background:#111;
+  padding:40px;
+  border-radius:20px;
+  width:350px;
+  text-align:center;
+  box-shadow:0 0 30px rgba(0,136,255,0.1);
+}
+
+button {
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  margin-top:10px;
+  cursor:pointer;
+  font-size:15px;
+}
+
+.btn-telegram {
+  background:#0088cc;
+  color:white;
+}
+
+.btn-access {
+  background:#00ffae;
+  color:black;
+}
+
+input {
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  margin-top:15px;
+  background:#000;
+  color:white;
+}
+
+.result {
+  margin-top:15px;
+}
+</style>
 </head>
-<body style="text-align:center; font-family:Arial; background:#000; color:white; padding-top:100px;">
 
-<h2>🔐 Ambil Akses VIP</h2>
+<body>
 
-<p>Step 1: Klik tombol di bawah untuk ambil kode</p>
+<div class="card">
+  <h2>🔐 Akses VIP</h2>
 
-<a href="https://t.me/telebokepcombot">
-  <button style="padding:15px;">Ambil Kode di Telegram</button>
-</a>
+  <p>Ambil kode akses melalui Telegram</p>
 
-<br><br>
+  <a href="https://t.me/telebokepcombot">
+    <button class="btn-telegram">Ambil Kode</button>
+  </a>
 
-<p>Step 2: Masukkan kode dari bot</p>
+  <input type="text" id="code" placeholder="Masukkan kode VIP">
 
-<input type="text" id="code" placeholder="Masukkan kode">
-<br><br>
+  <button class="btn-access" onclick="cek()">Masuk VIP</button>
 
-<button onclick="cek()" style="padding:10px;">Masuk VIP</button>
-
-<p id="result"></p>
+  <div class="result" id="result"></div>
+</div>
 
 <script>
 function cek() {
@@ -30,10 +85,10 @@ function cek() {
 
   if (kode === "VIP2024") {
     document.getElementById("result").innerHTML =
-    "✅ Akses diterima!<br><br><a href='https://t.me/+nYtXYGm--r85OWVl'>👉 Masuk Grup VIP</a>";
+    "✅ Akses berhasil<br><br><a href='https://t.me/+nYtXYGm--r85OWVl' style='color:#00ffae;'>Masuk Grup VIP</a>";
   } else {
     document.getElementById("result").innerHTML =
-    "❌ Kode salah, ambil dari bot dulu";
+    "❌ Kode salah";
   }
 }
 </script>
