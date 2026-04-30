@@ -1,203 +1,82 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Checkout</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-body {
-  margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:#0b0e11;
-  color:#eaecef;
-}
-
-.header {
-  padding:15px;
-  font-size:18px;
-  font-weight:bold;
-  border-bottom:1px solid #222;
-}
-
-.container {
-  max-width:420px;
-  margin:auto;
-  padding:15px;
-}
-
-.card {
-  background:#1e2329;
-  padding:20px;
-  border-radius:12px;
-  margin-bottom:15px;
-}
-
-.label {
-  font-size:12px;
-  color:#848e9c;
-}
-
-.value {
-  font-size:14px;
-  margin-top:3px;
-}
-
-.amount {
-  font-size:24px;
-  color:#0ecb81;
-  font-weight:bold;
-}
-
-.wallet {
-  background:#0b0e11;
-  padding:10px;
-  border-radius:8px;
-  font-size:12px;
-  word-break:break-all;
-  margin-top:10px;
-}
-
-button {
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:8px;
-  margin-top:10px;
-  font-size:14px;
-}
-
-.copy {
-  background:#2b3139;
-  color:#fff;
-}
-
-.pay {
-  background:#fcd535;
-  color:#000;
-  font-weight:bold;
-}
-
-.timer {
-  text-align:center;
-  margin-top:10px;
-  color:#f6465d;
-}
-
-.progress {
-  height:5px;
-  background:#2b3139;
-  border-radius:10px;
-  margin-top:10px;
-  overflow:hidden;
-  display:none;
-}
-
-.bar {
-  height:100%;
-  width:0%;
-  background:#0ecb81;
-}
-
-.logs {
-  margin-top:10px;
-  font-size:12px;
-  color:#0ecb81;
-  font-family:monospace;
-}
+body{margin:0;background:#0b0f1a;color:#fff;font-family:'Inter',sans-serif}
+.container{max-width:420px;margin:auto;padding:20px}
+.card{background:linear-gradient(145deg,#111827,#1f2937);padding:18px;border-radius:16px;margin-bottom:14px}
+.title{font-size:18px;font-weight:600;margin-bottom:10px}
+.label{font-size:12px;color:#9ca3af;margin-bottom:4px}
+.value{font-size:14px}
+.addr{word-break:break-all;background:#020617;padding:10px;border-radius:10px;font-size:12px}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.btn{width:100%;padding:12px;border:0;border-radius:12px;font-weight:600;cursor:pointer;margin-top:10px}
+.btn-copy{background:#111827;color:#fff}
+.btn-primary{background:#facc15;color:#000}
+.timer{font-size:13px;color:#facc15;font-weight:600}
+.small{font-size:12px;color:#9ca3af;margin-top:6px}
 </style>
 </head>
-
 <body>
-
-<div class="header">Binance Pay</div>
 
 <div class="container">
 
   <div class="card">
-    <div class="label">Order</div>
-    <div class="value">VIP Access</div>
-  </div>
+    <div class="title">Checkout</div>
 
-  <div class="card">
     <div class="label">Amount</div>
-    <div class="amount">2 USDT</div>
+    <div class="value">2 USDT (TRC20)</div>
 
-    <div class="label" style="margin-top:10px;">Network</div>
-    <div class="value">TRON (TRC20)</div>
-  </div>
+    <div class="label" style="margin-top:10px;">Wallet Address</div>
+    <div id="addr" class="addr">TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf</div>
 
-  <div class="card">
-    <div class="label">Deposit Address</div>
+    <button class="btn btn-copy" onclick="copyAddr()">Copy Address</button>
 
-    <div class="wallet" id="wallet">
-      TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf
+    <div class="row">
+      <div class="small">Time left to pay</div>
+      <div id="timer" class="timer">05:00</div>
     </div>
 
-    <button class="copy" onclick="copy()">Copy Address</button>
+    <div class="small">Send exact amount to the address above.</div>
+
+    <button class="btn btn-primary" onclick="goVIP()">I have paid</button>
   </div>
 
-  <div class="timer" id="timer">05:00</div>
-
-  <button class="pay" onclick="start()">I HAVE PAID</button>
-
-  <div class="progress" id="progress">
-    <div class="bar" id="bar"></div>
+  <div class="card">
+    <div class="label">Next step</div>
+    <div class="value">Open Telegram bot, send proof, get your VIP code.</div>
   </div>
-
-  <div class="logs" id="logs"></div>
 
 </div>
 
 <script>
-let time=300;
-
-setInterval(()=>{
-  let m=Math.floor(time/60);
-  let s=time%60;
-  document.getElementById("timer").innerHTML=
-  m+":"+(s<10?"0":"")+s;
-  time--;
-},1000);
-
-function copy(){
-  navigator.clipboard.writeText("TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf");
+function copyAddr(){
+  const el = document.getElementById("addr");
+  navigator.clipboard.writeText(el.innerText);
   alert("Address copied");
 }
 
-function start(){
-  let logs=document.getElementById("logs");
-  let bar=document.getElementById("bar");
-  let progress=document.getElementById("progress");
+// 5 minute countdown
+let total = 300; // 300s = 5 min
+const tEl = document.getElementById("timer");
 
-  progress.style.display="block";
+const timer = setInterval(()=>{
+  let m = Math.floor(total/60);
+  let s = total%60;
+  tEl.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+  total--;
 
-  let steps=[
-    "Connecting to TRON node...",
-    "Detecting transaction...",
-    "Confirming (1/3)...",
-    "Confirming (2/3)...",
-    "Confirming (3/3)...",
-    "Verification required"
-  ];
+  if(total < 0){
+    clearInterval(timer);
+    tEl.innerText = "Expired";
+  }
+},1000);
 
-  let i=0;
-  let width=0;
-
-  let interval=setInterval(()=>{
-    logs.innerHTML+=steps[i]+"<br>";
-    width+=15;
-    bar.style.width=width+"%";
-    i++;
-
-    if(i>=steps.length){
-      clearInterval(interval);
-      setTimeout(()=>{
-        window.location.href="vip.html";
-      },1200);
-    }
-
-  },900);
+function goVIP(){
+  window.location.href = "vip.html";
 }
 </script>
 
