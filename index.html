@@ -1,49 +1,57 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VIP Access</title>
 
 <style>
 body {
   margin:0;
-  font-family:'Segoe UI', sans-serif;
-  background:#0b0b0b;
-  color:white;
+  font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(135deg,#050505,#0d0d0d);
+  color:#fff;
   display:flex;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   height:100vh;
 }
 
 .card {
-  background:#121212;
+  background:#111;
   padding:30px;
   border-radius:18px;
-  text-align:center;
   width:90%;
   max-width:380px;
-  box-shadow:0 0 30px rgba(0,255,150,0.1);
+  text-align:center;
+  box-shadow:0 0 40px rgba(0,255,150,0.08);
 }
 
 h1 {
   font-size:22px;
 }
 
-p {
-  font-size:14px;
+.price {
+  font-size:28px;
+  color:#00ffa6;
+  margin:10px 0;
+}
+
+.features {
+  font-size:13px;
   color:#aaa;
+  margin:15px 0;
 }
 
 button {
   width:100%;
-  padding:15px;
+  padding:14px;
   border:none;
   border-radius:10px;
   background:linear-gradient(135deg,#00ffa6,#00c853);
   color:black;
   font-size:16px;
-  margin-top:20px;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -53,14 +61,15 @@ button {
 <div class="card">
   <h1>💎 VIP ACCESS</h1>
 
-  <p>Secure crypto payment gateway</p>
+  <div class="price">2 USDT</div>
 
-  <p style="margin-top:15px;">
-  🔒 Blockchain secured<br>
-  ⚡ Instant access after verification
-  </p>
+  <div class="features">
+    🔒 Secure Blockchain Payment<br>
+    ⚡ Fast Verification<br>
+    💬 Private VIP Telegram Access
+  </div>
 
-  <button onclick="goPay()">Proceed to Payment</button>
+  <button onclick="goPay()">Unlock VIP</button>
 </div>
 
 <script>
