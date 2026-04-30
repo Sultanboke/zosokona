@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Payment</title>
+
+<style>
+body {
+  margin:0;
+  font-family:'Segoe UI', sans-serif;
+  background:#0a0a0a;
+  color:white;
+}
+
+.container {
+  max-width:420px;
+  margin:auto;
+  padding:20px;
+}
+
+.card {
+  background:#121212;
+  padding:25px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 0 30px rgba(0,255,150,0.08);
+}
+
+h2 {
+  margin-bottom:10px;
+}
+
+.status {
+  font-size:13px;
+  color:#aaa;
+  margin-bottom:15px;
+}
+
+.qr img {
+  width:180px;
+  border-radius:10px;
+}
+
+.wallet {
+  background:#000;
+  padding:10px;
+  border-radius:10px;
+  font-size:12px;
+  word-break:break-all;
+  margin-top:15px;
+  color:#0f0;
+}
+
+button {
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  margin-top:12px;
+  font-size:15px;
+}
+
+.copy {
+  background:#222;
+  color:white;
+}
+
+.pay {
+  background:linear-gradient(135deg,#00ffa6,#00c853);
+  color:black;
+}
+
+.timer {
+  margin-top:10px;
+  color:#ff5252;
+  font-size:16px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+
+    <h2>💳 Crypto Payment</h2>
+    <div class="status">Send exact amount within time</div>
+
+    <div class="qr">
+      <img src="qr.png">
+    </div>
+
+    <div class="wallet">
+      TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf
+    </div>
+
+    <button class="copy" onclick="copyWallet()">Copy Address</button>
+
+    <div class="timer" id="timer">05:00</div>
+
+    <button class="pay" onclick="paid()">I HAVE PAID</button>
+
+  </div>
+</div>
+
+<script>
+let time = 300;
+
+setInterval(()=>{
+  let m = Math.floor(time/60);
+  let s = time%60;
+  document.getElementById("timer").innerHTML =
+  m + ":" + (s<10?"0":"")+s;
+  time--;
+},1000);
+
+function copyWallet(){
+  navigator.clipboard.writeText("TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf");
+  alert("Copied");
+}
+
+function paid(){
+  window.location.href="vip.html";
+}
+</script>
+
+</body>
+</html>
