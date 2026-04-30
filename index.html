@@ -8,23 +8,23 @@
 <style>
 body {
   margin:0;
-  font-family: 'Segoe UI', sans-serif;
-  background:#0f0f0f;
+  font-family:'Segoe UI', sans-serif;
+  background:#0b0b0b;
   color:white;
 }
 
 .container {
-  padding:20px;
-  max-width:400px;
+  max-width:420px;
   margin:auto;
-  text-align:center;
+  padding:20px;
 }
 
 .card {
-  background:#1a1a1a;
+  background:#121212;
   padding:25px;
-  border-radius:15px;
-  box-shadow:0 0 20px rgba(0,255,150,0.1);
+  border-radius:18px;
+  text-align:center;
+  box-shadow:0 0 30px rgba(0,255,150,0.08);
 }
 
 h1 {
@@ -32,18 +32,22 @@ h1 {
 }
 
 .price {
-  color:#00ffae;
-  font-size:18px;
+  color:#00ffa6;
+  margin-bottom:10px;
+}
+
+.badge {
+  font-size:12px;
+  color:#aaa;
   margin-bottom:15px;
 }
 
 .wallet {
   background:#000;
-  padding:10px;
+  padding:12px;
   border-radius:10px;
-  font-size:13px;
+  font-size:12px;
   word-break:break-all;
-  margin:15px 0;
   color:#0f0;
 }
 
@@ -52,21 +56,58 @@ button {
   padding:14px;
   border:none;
   border-radius:10px;
-  background:#00ffae;
-  color:black;
+  margin-top:12px;
   font-size:15px;
-  margin-top:10px;
+}
+
+.copy {
+  background:#222;
+  color:white;
+}
+
+.pay {
+  background:linear-gradient(135deg,#00ffa6,#00c853);
+  color:black;
 }
 
 .timer {
-  margin-top:15px;
-  font-size:16px;
+  margin-top:10px;
   color:#ff5252;
 }
 
-.success {
-  color:#00ffae;
-  margin-top:10px;
+.loader {
+  display:none;
+  margin-top:15px;
+}
+
+.loader span {
+  display:inline-block;
+  width:8px;
+  height:8px;
+  background:#00ffa6;
+  border-radius:50%;
+  margin:3px;
+  animation: bounce 1s infinite;
+}
+
+.loader span:nth-child(2){animation-delay:0.2s;}
+.loader span:nth-child(3){animation-delay:0.4s;}
+
+@keyframes bounce {
+  0%,80%,100% { transform:scale(0); }
+  40% { transform:scale(1); }
+}
+
+.toast {
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#111;
+  padding:10px 15px;
+  border-radius:10px;
+  font-size:12px;
+  display:none;
 }
 </style>
 </head>
@@ -76,61 +117,73 @@ button {
 <div class="container">
   <div class="card">
 
-    <h1>🔥 VIP ACCESS</h1>
-    <div class="price">$5 (USDT TRC20)</div>
+    <h1>💎 VIP ACCESS</h1>
+    <div class="price">$5 USDT (TRC20)</div>
 
-    <p>Kirim ke alamat:</p>
+    <div class="badge">
+      🔒 Payment secured by blockchain<br>
+      ⚡ Auto verification system enabled
+    </div>
+
     <div class="wallet" id="wallet">
       TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf
     </div>
 
-    <button onclick="copyWallet()">Copy Wallet</button>
+    <button class="copy" onclick="copyWallet()">Copy Address</button>
 
-    <div class="timer" id="timer">Waktu: 05:00</div>
+    <div class="timer" id="timer">05:00</div>
 
-    <button onclick="bayar()">Saya Sudah Bayar</button>
+    <button class="pay" onclick="pay()">I HAVE PAID</button>
 
-    <div id="status"></div>
+    <div class="loader" id="loader">
+      Verifying payment...
+      <br>
+      <span></span><span></span><span></span>
+    </div>
 
   </div>
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
-let time = 300; // 5 menit
+let time = 300;
 
-let countdown = setInterval(function() {
-  let minutes = Math.floor(time / 60);
-  let seconds = time % 60;
-
+setInterval(() => {
+  let m = Math.floor(time/60);
+  let s = time%60;
   document.getElementById("timer").innerHTML =
-    "Waktu: " + minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-
+  m + ":" + (s<10?"0":"") + s;
   time--;
+},1000);
 
-  if (time < 0) {
-    clearInterval(countdown);
-    document.getElementById("timer").innerHTML = "❌ Waktu habis, ulangi pembayaran";
-  }
-}, 1000);
-
-function copyWallet() {
+function copyWallet(){
   navigator.clipboard.writeText("TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf");
-  alert("Wallet berhasil di-copy!");
+  showToast("Address copied");
 }
 
-function bayar() {
-  if (time <= 0) {
-    alert("Waktu sudah habis!");
-    return;
-  }
+function pay(){
+  document.getElementById("loader").style.display="block";
 
-  document.getElementById("status").innerHTML =
-    "<div class='success'>✅ Pembayaran berhasil diverifikasi</div>";
-
-  setTimeout(() => {
-    window.location.href = "vip.html";
-  }, 1500);
+  setTimeout(()=>{
+    showToast("Payment confirmed");
+    window.location.href="vip.html";
+  },3000);
 }
+
+function showToast(msg){
+  let t = document.getElementById("toast");
+  t.innerHTML = msg;
+  t.style.display="block";
+  setTimeout(()=>{t.style.display="none";},2000);
+}
+
+// FAKE LIVE PURCHASE POPUP
+setInterval(()=>{
+  let names=["User123","CryptoKing","VIPBuyer","AnonX"];
+  let random = names[Math.floor(Math.random()*names.length)];
+  showToast(random+" just purchased VIP");
+},8000);
 </script>
 
 </body>
