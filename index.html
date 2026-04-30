@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VIP Access</title>
+<title>VIP Dashboard</title>
 
 <style>
 body {
   margin:0;
   font-family:'Segoe UI', sans-serif;
-  background:#0b0b0b;
+  background:#0a0a0a;
   color:white;
 }
 
@@ -24,31 +24,17 @@ body {
   padding:25px;
   border-radius:18px;
   text-align:center;
-  box-shadow:0 0 30px rgba(0,255,150,0.08);
+  box-shadow:0 0 25px rgba(0,255,150,0.08);
 }
 
-h1 {
-  font-size:22px;
-}
-
-.price {
-  color:#00ffa6;
+h2 {
   margin-bottom:10px;
 }
 
-.badge {
-  font-size:12px;
+.status {
+  font-size:13px;
   color:#aaa;
   margin-bottom:15px;
-}
-
-.wallet {
-  background:#000;
-  padding:12px;
-  border-radius:10px;
-  font-size:12px;
-  word-break:break-all;
-  color:#0f0;
 }
 
 button {
@@ -56,23 +42,29 @@ button {
   padding:14px;
   border:none;
   border-radius:10px;
-  margin-top:12px;
+  margin-top:10px;
   font-size:15px;
 }
 
-.copy {
-  background:#222;
+.telegram {
+  background:#0088cc;
   color:white;
 }
 
-.pay {
+.unlock {
   background:linear-gradient(135deg,#00ffa6,#00c853);
   color:black;
 }
 
-.timer {
+input {
+  width:100%;
+  padding:12px;
+  border-radius:10px;
+  border:none;
   margin-top:10px;
-  color:#ff5252;
+  background:#000;
+  color:white;
+  text-align:center;
 }
 
 .loader {
@@ -87,27 +79,26 @@ button {
   background:#00ffa6;
   border-radius:50%;
   margin:3px;
-  animation: bounce 1s infinite;
+  animation:bounce 1s infinite;
 }
 
 .loader span:nth-child(2){animation-delay:0.2s;}
 .loader span:nth-child(3){animation-delay:0.4s;}
 
 @keyframes bounce {
-  0%,80%,100% { transform:scale(0); }
-  40% { transform:scale(1); }
+  0%,80%,100% {transform:scale(0);}
+  40% {transform:scale(1);}
 }
 
-.toast {
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:#111;
-  padding:10px 15px;
-  border-radius:10px;
-  font-size:12px;
-  display:none;
+.success {
+  margin-top:15px;
+  color:#00ffa6;
+  font-size:14px;
+}
+
+.lock {
+  font-size:40px;
+  margin:10px 0;
 }
 </style>
 </head>
@@ -117,73 +108,68 @@ button {
 <div class="container">
   <div class="card">
 
-    <h1>💎 VIP ACCESS</h1>
-    <div class="price">$5 USDT (TRC20)</div>
+    <div class="lock">🔒</div>
 
-    <div class="badge">
-      🔒 Payment secured by blockchain<br>
-      ⚡ Auto verification system enabled
-    </div>
+    <h2>VIP ACCESS LOCKED</h2>
+    <div class="status">Verification required</div>
 
-    <div class="wallet" id="wallet">
-      TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf
-    </div>
+    <p>Get your access code via Telegram</p>
 
-    <button class="copy" onclick="copyWallet()">Copy Address</button>
+    <a href="https://t.me/telebokepcombot">
+      <button class="telegram">Get Code</button>
+    </a>
 
-    <div class="timer" id="timer">05:00</div>
+    <input type="text" id="code" placeholder="Enter VIP Code">
 
-    <button class="pay" onclick="pay()">I HAVE PAID</button>
+    <button class="unlock" onclick="unlock()">Unlock Access</button>
 
     <div class="loader" id="loader">
-      Verifying payment...
+      Verifying...
       <br>
       <span></span><span></span><span></span>
     </div>
 
+    <div id="result"></div>
+
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
-
 <script>
-let time = 300;
+let unlocked = false;
 
-setInterval(() => {
-  let m = Math.floor(time/60);
-  let s = time%60;
-  document.getElementById("timer").innerHTML =
-  m + ":" + (s<10?"0":"") + s;
-  time--;
-},1000);
+function unlock(){
 
-function copyWallet(){
-  navigator.clipboard.writeText("TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf");
-  showToast("Address copied");
-}
+  if(unlocked) return;
 
-function pay(){
+  let code = document.getElementById("code").value;
+
+  if(code.length < 3){
+    alert("Invalid code");
+    return;
+  }
+
   document.getElementById("loader").style.display="block";
 
   setTimeout(()=>{
-    showToast("Payment confirmed");
-    window.location.href="vip.html";
-  },3000);
-}
 
-function showToast(msg){
-  let t = document.getElementById("toast");
-  t.innerHTML = msg;
-  t.style.display="block";
-  setTimeout(()=>{t.style.display="none";},2000);
-}
+    if(code === "VIP2024"){
+      unlocked = true;
 
-// FAKE LIVE PURCHASE POPUP
-setInterval(()=>{
-  let names=["User123","CryptoKing","VIPBuyer","AnonX"];
-  let random = names[Math.floor(Math.random()*names.length)];
-  showToast(random+" just purchased VIP");
-},8000);
+      document.querySelector(".lock").innerHTML = "🔓";
+
+      document.getElementById("result").innerHTML =
+      "<div class='success'>Access Granted</div><br>" +
+      "<a href='https://t.me/+nYtXYGm--r85OWVl' style='color:#00ffa6;'>ENTER VIP GROUP</a>";
+
+    } else {
+      document.getElementById("result").innerHTML =
+      "<div style='color:red'>Invalid Code</div>";
+    }
+
+    document.getElementById("loader").style.display="none";
+
+  },2500);
+}
 </script>
 
 </body>
