@@ -1,181 +1,179 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VIP Dashboard</title>
 
 <style>
-body {
+body{
   margin:0;
-  font-family:'Segoe UI',sans-serif;
-  background:#0b0e11;
-  color:#eaecef;
+  background:#0b0f1a;
+  font-family:Arial;
+  color:white;
 }
 
-.header {
-  padding:15px;
-  font-size:18px;
-  font-weight:bold;
-  border-bottom:1px solid #222;
-}
-
-.container {
-  max-width:420px;
-  margin:auto;
+.container{
   padding:15px;
 }
 
-.card {
-  background:#1e2329;
-  padding:20px;
-  border-radius:12px;
+h1{
+  margin-bottom:20px;
+}
+
+/* CARD */
+.card{
+  background:linear-gradient(145deg,#111827,#1f2937);
+  padding:15px;
+  border-radius:16px;
   margin-bottom:15px;
 }
 
-.label {
-  font-size:12px;
-  color:#848e9c;
-}
-
-.value {
-  font-size:14px;
-  margin-top:5px;
-}
-
-.status {
-  color:#fcd535;
+/* STATUS */
+.status{
   font-weight:bold;
 }
 
-.success {
-  color:#0ecb81;
-  font-weight:bold;
-}
+.locked{color:#facc15;}
+.unlocked{color:#00e676;}
 
-input {
+/* INPUT FIX */
+.input-box{
   width:100%;
-  padding:12px;
-  border-radius:8px;
+  height:48px;
+  border-radius:12px;
   border:none;
-  margin-top:10px;
-  background:#0b0e11;
+  outline:none;
+  padding:0 12px;
+  background:#020617;
   color:white;
-  text-align:center;
   font-size:16px;
+  box-sizing:border-box;
+  margin-top:10px;
 }
 
-button {
+/* BUTTON FIX */
+.btn{
   width:100%;
   padding:14px;
   border:none;
-  border-radius:8px;
-  margin-top:10px;
-  font-size:14px;
-}
-
-.btn {
-  background:#fcd535;
-  color:#000;
+  border-radius:12px;
+  margin-top:12px;
   font-weight:bold;
+  font-size:16px;
+  cursor:pointer;
 }
 
-.telegram {
+.btn-yellow{
+  background:#facc15;
+  color:black;
+}
+
+/* TELEGRAM BUTTON */
+.btn-telegram{
   background:#0088cc;
   color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+
+/* SUCCESS */
+.success{
+  margin-top:10px;
+  color:#00e676;
   font-weight:bold;
 }
 
-.result {
-  margin-top:15px;
-  font-size:14px;
+/* HIDDEN */
+.hidden{
+  display:none;
+}
+
+/* ANIMATION */
+.loading{
+  animation:blink 1s infinite;
+}
+
+@keyframes blink{
+  0%{opacity:1;}
+  50%{opacity:0.3;}
+  100%{opacity:1;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">VIP Dashboard</div>
-
 <div class="container">
 
-  <!-- STATUS -->
-  <div class="card">
-    <div class="label">Account Status</div>
-    <div class="value status" id="accountStatus">Locked 🔒</div>
+<h1>VIP Dashboard</h1>
+
+<!-- STATUS -->
+<div class="card">
+  <div>Account Status</div>
+  <div id="accStatus" class="status locked">Locked 🔒</div>
+</div>
+
+<!-- PRODUCT -->
+<div class="card">
+  <div>Product</div>
+  <div>VIP Access</div>
+  <div>Payment Status</div>
+  <div id="payStatus" class="loading">Waiting Verification ⏳</div>
+</div>
+
+<!-- BOT -->
+<div class="card">
+  <div>Verification</div>
+  <div>Get your VIP code via Telegram</div>
+
+  <button class="btn btn-telegram"
+  onclick="window.open('https://t.me/telebokepcombot')">
+  🚀 Open Telegram Bot
+  </button>
+</div>
+
+<!-- INPUT FIXED -->
+<div class="card">
+  <div>Enter VIP Code</div>
+
+  <input id="vipCode" class="input-box" placeholder="Enter code">
+
+  <button class="btn btn-yellow" onclick="unlockVIP()">
+  Unlock Access
+  </button>
+
+  <div id="successBox" class="hidden">
+    <div class="success">Access Granted ✅</div>
+
+    <button class="btn btn-telegram"
+    onclick="window.open('https://t.me/+nYtXYGm--r85OWVl')">
+    📲 Join VIP Telegram
+    </button>
   </div>
-
-  <!-- PRODUCT -->
-  <div class="card">
-    <div class="label">Product</div>
-    <div class="value">VIP Access</div>
-
-    <div class="label" style="margin-top:10px;">Payment Status</div>
-    <div class="value" id="paymentStatus">Waiting Verification ⏳</div>
-  </div>
-
-  <!-- BOT -->
-  <div class="card">
-    <div class="label">Verification</div>
-    <div class="value">Get your VIP code via Telegram</div>
-
-    <a href="https://t.me/telebokepcombot">
-      <button class="telegram">Open Telegram Bot</button>
-    </a>
-  </div>
-
-  <!-- INPUT -->
-  <div class="card">
-    <div class="label">Enter VIP Code</div>
-
-    <input id="code" placeholder="Enter code">
-
-    <button class="btn" onclick="unlock()">Unlock Access</button>
-
-    <div class="result" id="result"></div>
-  </div>
+</div>
 
 </div>
 
 <script>
-function unlock(){
 
-  let code = document.getElementById("code").value;
-  let result = document.getElementById("result");
-  let accountStatus = document.getElementById("accountStatus");
-  let paymentStatus = document.getElementById("paymentStatus");
+function unlockVIP(){
+  let code = document.getElementById("vipCode").value;
 
   if(code === "VIP2024"){
+    document.getElementById("accStatus").innerHTML = "Unlocked 🔓";
+    document.getElementById("accStatus").className = "status unlocked";
 
-    // animasi verifikasi
-    paymentStatus.innerHTML = "Verifying... ⏳";
+    document.getElementById("payStatus").innerHTML = "Verification Success ✅";
+    document.getElementById("payStatus").classList.remove("loading");
 
-    let dots = 0;
-    let loading = setInterval(()=>{
-      dots++;
-      paymentStatus.innerHTML = "Verifying" + ".".repeat(dots % 4) + " ⏳";
-    },400);
-
-    setTimeout(()=>{
-      clearInterval(loading);
-
-      paymentStatus.innerHTML = "Verified ✅";
-      accountStatus.innerHTML = "Unlocked 🔓";
-
-      result.innerHTML =
-      "<div class='success'>Verification Success ✅</div><br>" +
-      "<a href='https://t.me/+nYtXYGm--r85OWVl'>" +
-      "<button class='telegram'>🚀 Join VIP Telegram</button></a>";
-
-    },1800);
-
+    document.getElementById("successBox").classList.remove("hidden");
   } else {
-
-    result.innerHTML =
-    "<div style='color:#f6465d;'>Invalid Code ❌</div>";
-
+    alert("Invalid code ❌");
   }
 }
+
 </script>
 
 </body>
