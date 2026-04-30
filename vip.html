@@ -8,81 +8,107 @@
 body{
   margin:0;
   background:#0b0f1a;
-  font-family:Arial;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   color:white;
 }
 
+/* CONTAINER */
 .container{
-  padding:15px;
+  padding:16px;
 }
 
+/* TITLE */
 h1{
-  margin-bottom:20px;
+  font-size:22px;
+  font-weight:600;
+  margin-bottom:18px;
+  letter-spacing:0.3px;
 }
 
 /* CARD */
 .card{
   background:linear-gradient(145deg,#111827,#1f2937);
-  padding:15px;
-  border-radius:16px;
-  margin-bottom:15px;
+  padding:14px;
+  border-radius:14px;
+  margin-bottom:12px;
+}
+
+/* LABEL TEXT */
+.card div{
+  font-size:13px;
+  color:#9ca3af;
+  margin-bottom:4px;
+}
+
+/* VALUE TEXT */
+.card div strong{
+  color:white;
 }
 
 /* STATUS */
 .status{
-  font-weight:bold;
+  font-size:14px;
+  font-weight:600;
 }
 
 .locked{color:#facc15;}
 .unlocked{color:#00e676;}
 
-/* INPUT FIX */
+/* PAYMENT TEXT */
+#payStatus{
+  font-size:13px;
+}
+
+/* INPUT */
 .input-box{
   width:100%;
-  height:48px;
-  border-radius:12px;
+  height:44px;
+  border-radius:10px;
   border:none;
   outline:none;
   padding:0 12px;
   background:#020617;
   color:white;
-  font-size:16px;
+  font-size:14px;
   box-sizing:border-box;
-  margin-top:10px;
+  margin-top:8px;
 }
 
-/* BUTTON FIX */
+/* BUTTON */
 .btn{
   width:100%;
-  padding:14px;
+  padding:12px;
   border:none;
-  border-radius:12px;
-  margin-top:12px;
-  font-weight:bold;
-  font-size:16px;
+  border-radius:10px;
+  margin-top:10px;
+  font-weight:600;
+  font-size:14px;
   cursor:pointer;
 }
 
+/* YELLOW BTN */
 .btn-yellow{
   background:#facc15;
   color:black;
 }
 
-/* TELEGRAM BUTTON */
+/* TELEGRAM BTN */
 .btn-telegram{
   background:#0088cc;
   color:white;
   display:flex;
   align-items:center;
   justify-content:center;
-  gap:8px;
+  gap:6px;
+  font-size:14px;
 }
 
 /* SUCCESS */
 .success{
-  margin-top:10px;
+  margin-top:8px;
   color:#00e676;
-  font-weight:bold;
+  font-size:13px;
+  font-weight:600;
 }
 
 /* HIDDEN */
@@ -97,10 +123,14 @@ h1{
 
 @keyframes blink{
   0%{opacity:1;}
-  50%{opacity:0.3;}
+  50%{opacity:0.4;}
   100%{opacity:1;}
 }
 </style>
+
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
@@ -118,7 +148,8 @@ h1{
 <!-- PRODUCT -->
 <div class="card">
   <div>Product</div>
-  <div>VIP Access</div>
+  <strong>VIP Access</strong>
+
   <div>Payment Status</div>
   <div id="payStatus" class="loading">Waiting Verification ⏳</div>
 </div>
@@ -134,7 +165,7 @@ h1{
   </button>
 </div>
 
-<!-- INPUT FIXED -->
+<!-- INPUT -->
 <div class="card">
   <div>Enter VIP Code</div>
 
