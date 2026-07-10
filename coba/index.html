@@ -78,6 +78,27 @@ text-align:center;padding:30px;color:#666
 .hero h1{font-size:26px}
 .search{width:120px}
 }
+.pagination{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:8px;
+padding:20px;
+}
+
+.pagination button{
+padding:10px 15px;
+border:none;
+border-radius:10px;
+background:#1c1c1c;
+color:#fff;
+cursor:pointer;
+}
+
+.pagination button.active{
+background:#e50914;
+}
+  
 </style>
 </head>
 <body>
@@ -94,12 +115,19 @@ text-align:center;padding:30px;color:#666
 
 <div class="grid" id="gallery"></div>
 
+<div id="pagination" class="pagination"></div>
+
 <footer>© 2026 Premium Gallery</footer>
 
 <script>
-const gallery=document.getElementById("gallery");
-const search=document.getElementById("search");
-let items=[];
+const gallery = document.getElementById("gallery");
+const search = document.getElementById("search");
+const pagination = document.getElementById("pagination");
+
+let items = [];
+
+const PER_PAGE = 15;
+let currentPage = 1;
 
 fetch("data.json")
 .then(r=>r.json())
