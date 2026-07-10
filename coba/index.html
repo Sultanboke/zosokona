@@ -184,6 +184,10 @@ width:100%;
 <p>Update setiap hari</p>
 </section>
 
+<p id="totalContent" style="margin-top:10px;color:#bbb;font-size:14px;">
+📁 Loading...
+</p>
+  
 <div class="top-menu">
 
 <a href="tutorial.html" class="menu-btn">
@@ -219,6 +223,9 @@ fetch("data.json")
 // Membalik urutan data agar yang terakhir di data.json tampil paling atas
 items = data.reverse();
 
+document.getElementById("totalContent").textContent =
+`📁 Total: ${items.length} Contents`;
+  
 render(items);
 
 })
