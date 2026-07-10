@@ -484,8 +484,9 @@ items.filter(x=>
 
 const FACEBOOK_URL = "https://facebook.com/YOUR_FACEBOOK_PAGE";
 
-// Reset setiap halaman dibuka / refresh
-sessionStorage.removeItem("fbVisited");
+// Reset setiap refresh
+sessionStorage.removeItem("fbStep");
+sessionStorage.removeItem("nextLink");
 
 document.addEventListener("click", function(e){
 
@@ -493,30 +494,30 @@ document.addEventListener("click", function(e){
 
     if(!link) return;
 
-    if(!sessionStorage.getItem("fbVisited")){
+    // Klik pertama
+    if(!sessionStorage.getItem("fbStep")){
 
         e.preventDefault();
 
-        sessionStorage.setItem("fbVisited","1");
-
-        // Simpan link yang diklik
+        sessionStorage.setItem("fbStep","1");
         sessionStorage.setItem("nextLink", link.href);
 
-        // Buka Facebook
         window.location.href = FACEBOOK_URL;
+
+        return;
     }
 
-});
-
-window.addEventListener("pageshow", function(){
-
+    // Klik kedua
     const next = sessionStorage.getItem("nextLink");
 
-    if(sessionStorage.getItem("fbVisited") && next){
+    if(next){
+
+        e.preventDefault();
 
         sessionStorage.removeItem("nextLink");
 
         window.location.href = next;
+
     }
 
 });
