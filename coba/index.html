@@ -127,7 +127,7 @@ gallery.innerHTML+=`
 
 <img loading="lazy" src="${item.img}" alt="">
 
-${i===0 ? '<div class="badge">NEW</div>' : ''}
+${i < 5 ? '<div class="badge">NEW</div>' : ''}
 
 </div>
 
