@@ -210,6 +210,45 @@ z-index:0;
 0%{background-position:200% 0;}
 100%{background-position:-200% 0;}
 }
+.section-title{
+margin:20px 18px 10px;
+font-size:22px;
+font-weight:800;
+color:#fff;
+}
+
+.rare-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+padding:0 18px 20px;
+}
+
+.rare-card{
+position:relative;
+display:block;
+border-radius:12px;
+overflow:hidden;
+}
+
+.rare-card img{
+width:100%;
+display:block;
+aspect-ratio:2/3;
+object-fit:cover;
+}
+
+.rare-badge{
+position:absolute;
+top:8px;
+left:8px;
+background:#FFD700;
+color:#000;
+padding:4px 8px;
+border-radius:999px;
+font-size:10px;
+font-weight:700;
+}
 
   
 </style>
@@ -251,7 +290,10 @@ z-index:0;
 <div class="announcement">
 📢 New Collection Added Today • Check The Latest Updates Below!
 </div>  
-  
+<h2 class="section-title">💎 Rare Collection</h2>
+
+<div class="rare-grid" id="rareGallery"></div>
+    
 <div class="grid" id="gallery"></div>
 
 <div id="pagination" class="pagination"></div>
@@ -274,7 +316,7 @@ fetch("data.json")
 
 // Membalik urutan data agar yang terakhir di data.json tampil paling atas
 items = data.reverse();
-  
+
 render(items);
 
 })
@@ -282,6 +324,31 @@ render(items);
 gallery.innerHTML="<p style='padding:20px;color:#999'>data.json tidak ditemukan.</p>";
 });
 
+fetch("rare.json")
+.then(r=>r.json())
+.then(data=>{
+
+const rareGallery = document.getElementById("rareGallery");
+
+rareGallery.innerHTML = "";
+
+data.forEach(item=>{
+
+rareGallery.innerHTML += `
+<a class="rare-card" href="${item.link}" target="_blank">
+<img src="${item.img}" loading="lazy">
+<div class="rare-badge">💎 RARE</div>
+</a>
+`;
+
+});
+
+})
+.catch(()=>{
+console.log("rare.json tidak ditemukan");
+});
+
+  
 function render(list){
 
 gallery.innerHTML="";
