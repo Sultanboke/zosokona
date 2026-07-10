@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Linkdoodvi Updates</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Inter,sans-serif;background:#0a0a0a;color:#fff;background-image:radial-gradient(circle at top,#1a1a1a,#0a0a0a 45%)}
+header{position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:rgba(10,10,10,.75);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+.logo{font-size:28px;font-weight:800;color:#e50914}
+.search{width:180px;padding:10px 14px;border:none;border-radius:999px;background:#181818;color:#fff;outline:none}
+.hero{margin:18px;border-radius:24px;padding:40px 24px;background:linear-gradient(135deg,#1b1b1b,#101010);border:1px solid rgba(255,255,255,.08)}
+.hero h1{font-size:34px}
+.hero p{color:#aaa;margin-top:8px}
+.running{margin-top:15px;padding:8px;border-radius:10px;background:#181818;color:#e50914}
+.top-menu{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:0 18px 18px}
+.menu-btn{padding:12px 20px;border-radius:999px;text-decoration:none;color:#fff;background:#181818;border:1px solid rgba(255,255,255,.08)}
+.announcement{margin:0 18px 18px;padding:12px;border-radius:12px;background:#e50914;text-align:center;font-weight:700}
+.banner{max-width:728px;margin:18px auto;padding:0 18px}
+.banner img{width:100%;border-radius:12px;display:block}
+.container{max-width:900px;margin:auto;padding:18px}
+.post{background:#141414;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px;margin-bottom:18px;animation:fade .4s}
+.post h2{font-size:20px;margin-bottom:15px}
+.links{display:grid;gap:10px}
+.links a{text-decoration:none;color:#fff;background:#229ED9;padding:12px;border-radius:10px;font-weight:700;text-align:center}
+footer{text-align:center;padding:30px;color:#666}
+@keyframes fade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
 
+<header>
+<div class="logo">LINKDOODVI</div>
+<input id="search" class="search" placeholder="Search">
+</header>
+
+<div class="banner">
+<a href="https://link-affiliate-kamu.com" target="_blank">
+<img src="../featured-top.png" alt="Banner">
+</a>
+</div>
+
+<section class="hero">
+<h1>Link Dood</h1>
+<div class="running"><marquee scrollamount="5">🔥 Updated Every Day • Premium Links • Fast Access • Bookmark This Website</marquee></div>
+<p>Daily Link Updates</p>
+</section>
+
+<div class="top-menu">
+<a href="tutorial.html" class="menu-btn">🎬 Tutorial Watch</a>
+<a href="disclaimer.html" class="menu-btn">⚠️ Disclaimer</a>
+</div>
+
+<div class="announcement">📢 New Collection Added Today • Check The Latest Updates Below!</div>
+
+<div id="posts" class="container"></div>
+
+<footer>© 2026 Linkdoodvi Updates</footer>
+
+<script>
+const posts=document.getElementById("posts");
+const search=document.getElementById("search");
+let all=[];
+
+fetch("posts.json")
+.then(r=>r.json())
+.then(data=>{
+all=data.reverse();
+render(all);
+});
+
+function render(list){
+posts.innerHTML="";
+list.forEach((post,index)=>{
+let html=`<div class="post">
+<h2>${index<5?'🆕 ':''}${post.title}</h2>
+<div class="links">`;
+post.links.forEach((l,i)=>{
+html+=`<a href="${l}" target="_blank">▶ Link ${i+1}</a>`;
+});
+html+=`</div></div>`;
+posts.innerHTML+=html;
+});
+}
+
+search.oninput=()=>{
+const q=search.value.toLowerCase();
+render(all.filter(p=>p.title.toLowerCase().includes(q)));
+};
+</script>
+
+</body>
+</html>
