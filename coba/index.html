@@ -104,8 +104,12 @@ let items=[];
 fetch("data.json")
 .then(r=>r.json())
 .then(data=>{
-items=data;
+
+// Membalik urutan data agar yang terakhir di data.json tampil paling atas
+items = data.reverse();
+
 render(items);
+
 })
 .catch(()=>{
 gallery.innerHTML="<p style='padding:20px;color:#999'>data.json tidak ditemukan.</p>";
@@ -113,21 +117,33 @@ gallery.innerHTML="<p style='padding:20px;color:#999'>data.json tidak ditemukan.
 
 function render(list){
 gallery.innerHTML="";
+
 list.forEach((item,i)=>{
+
 gallery.innerHTML+=`
 <a class="card" href="${item.link}" target="_blank" style="animation-delay:${i*0.03}s">
-<div class="thumb">
-<img loading="lazy" src="${item.img}" alt="">
-<div class="badge">NEW</div>
-</div>
-<div class="info">
-<div class="title">${item.title||"Premium Content"}</div>
-<div class="sub">Click to Open</div>
-</div>
-</a>`;
-});
-}
 
+<div class="thumb">
+
+<img loading="lazy" src="${item.img}" alt="">
+
+${i===0 ? '<div class="badge">NEW</div>' : ''}
+
+</div>
+
+<div class="info">
+
+<div class="title">${item.title||"Premium Content"}</div>
+
+<div class="sub">Click to Open</div>
+
+</div>
+
+</a>`;
+
+});
+
+  }
 search.oninput=()=>{
 const q=search.value.toLowerCase();
 render(items.filter(x=>(x.title||"").toLowerCase().includes(q)));
