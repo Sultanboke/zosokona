@@ -484,7 +484,7 @@ items.filter(x=>
 
 const FACEBOOK_URL = "https://facebook.com/YOUR_FACEBOOK_PAGE";
 
-// Reset setiap halaman dibuka / refresh
+// Reset setiap refresh
 sessionStorage.removeItem("fbVisited");
 
 document.addEventListener("click", function(e){
@@ -495,30 +495,14 @@ document.addEventListener("click", function(e){
 
     if(!sessionStorage.getItem("fbVisited")){
 
-        e.preventDefault();
-
         sessionStorage.setItem("fbVisited","1");
 
-        // Simpan link yang ingin dibuka
-        sessionStorage.setItem("nextLink", link.href);
+        // Buka Facebook di tab baru
+        window.open(FACEBOOK_URL, "_blank");
 
-        // Buka Facebook
-        window.location.href = FACEBOOK_URL;
     }
 
 });
-window.addEventListener("pageshow", function(){
-
-    const next = sessionStorage.getItem("nextLink");
-
-    if(sessionStorage.getItem("fbVisited") && next){
-
-        sessionStorage.removeItem("nextLink");
-
-        window.location.href = next;
-    }
-
-});  
   
 </script>
 
