@@ -98,6 +98,30 @@ cursor:pointer;
 .pagination button.active{
 background:#e50914;
 }
+.top-menu{
+display:flex;
+justify-content:center;
+gap:12px;
+padding:0 18px 18px;
+flex-wrap:wrap;
+}
+
+.menu-btn{
+padding:12px 22px;
+background:#181818;
+color:#fff;
+text-decoration:none;
+font-weight:700;
+border-radius:999px;
+border:1px solid rgba(255,255,255,.08);
+transition:.3s;
+}
+
+.menu-btn:hover{
+background:#e50914;
+transform:translateY(-2px);
+}
+  
   
 </style>
 </head>
@@ -112,6 +136,18 @@ background:#e50914;
 <h1>Link Dood</h1>
 <p>Update setiap hari</p>
 </section>
+
+<div class="top-menu">
+
+<a href="tutorial.html" class="menu-btn">
+🎬 Tutorial Watch
+</a>
+
+<a href="disclaimer.html" class="menu-btn">
+⚠️ Disclaimer
+</a>
+
+</div>
 
 <div class="grid" id="gallery"></div>
 
