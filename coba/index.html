@@ -217,25 +217,32 @@ font-weight:800;
 color:#fff;
 }
 
-.rare-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
+.rare-slider{
+display:flex;
+overflow-x:auto;
+gap:12px;
 padding:0 18px 20px;
+scrollbar-width:none;
+}
+
+.rare-slider::-webkit-scrollbar{
+display:none;
 }
 
 .rare-card{
+flex:0 0 140px;
 position:relative;
-display:block;
-border-radius:12px;
+border-radius:14px;
 overflow:hidden;
+text-decoration:none;
 }
 
 .rare-card img{
 width:100%;
-display:block;
 aspect-ratio:2/3;
 object-fit:cover;
+display:block;
+border-radius:14px;
 }
 
 .rare-badge{
@@ -290,9 +297,10 @@ font-weight:700;
 <div class="announcement">
 📢 New Collection Added Today • Check The Latest Updates Below!
 </div>  
+
 <h2 class="section-title">💎 Rare Collection</h2>
 
-<div class="rare-grid" id="rareGallery"></div>
+<div class="rare-slider" id="rareGallery"></div>
     
 <div class="grid" id="gallery"></div>
 
