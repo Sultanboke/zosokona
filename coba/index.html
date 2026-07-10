@@ -144,9 +144,19 @@ gallery.innerHTML="<p style='padding:20px;color:#999'>data.json tidak ditemukan.
 });
 
 function render(list){
+
 gallery.innerHTML="";
 
-list.forEach((item,i)=>{
+const totalPages = Math.ceil(list.length / PER_PAGE);
+
+if(currentPage > totalPages) currentPage = 1;
+
+const start = (currentPage - 1) * PER_PAGE;
+const end = start + PER_PAGE;
+
+const pageItems = list.slice(start, end);
+
+pageItems.forEach((item,i)=>{
 
 gallery.innerHTML+=`
 <a class="card" href="${item.link}" target="_blank" style="animation-delay:${i*0.03}s">
@@ -155,7 +165,7 @@ gallery.innerHTML+=`
 
 <img loading="lazy" src="${item.img}" alt="">
 
-${i < 5 ? '<div class="badge">NEW</div>' : ''}
+${start+i < 5 ? '<div class="badge">NEW</div>' : ''}
 
 </div>
 
@@ -171,11 +181,60 @@ ${i < 5 ? '<div class="badge">NEW</div>' : ''}
 
 });
 
-  }
-search.oninput=()=>{
-const q=search.value.toLowerCase();
-render(items.filter(x=>(x.title||"").toLowerCase().includes(q)));
+pagination.innerHTML="";
+
+if(currentPage>1){
+
+pagination.innerHTML+=`
+<button onclick="changePage(${currentPage-1})">◀ Prev</button>
+`;
+
 }
+
+for(let i=1;i<=totalPages;i++){
+
+pagination.innerHTML+=`
+<button class="${i===currentPage?'active':''}" onclick="changePage(${i})">${i}</button>
+`;
+
+}
+
+if(currentPage<totalPages){
+
+pagination.innerHTML+=`
+<button onclick="changePage(${currentPage+1})">Next ▶</button>
+`;
+
+}
+
+}
+function changePage(page){
+
+currentPage = page;
+
+render(items);
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+  
+search.oninput=()=>{
+
+currentPage = 1;
+
+const q = search.value.toLowerCase();
+
+render(
+items.filter(x=>
+(x.title||"").toLowerCase().includes(q)
+)
+
+);
+
+  }
 </script>
 
 </body>
