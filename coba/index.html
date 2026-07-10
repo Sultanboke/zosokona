@@ -1,1 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Premium Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:Inter,sans-serif;
+background:#0a0a0a;color:#fff;
+background-image:radial-gradient(circle at top,#1a1a1a,#0a0a0a 45%);
+}
+header{
+position:sticky;top:0;z-index:99;
+display:flex;justify-content:space-between;align-items:center;
+padding:16px 20px;
+background:rgba(10,10,10,.72);
+backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+.logo{font-size:28px;font-weight:800;color:#e50914}
+.search{
+width:180px;padding:10px 14px;border:none;border-radius:999px;
+background:#181818;color:#fff;outline:none
+}
+.hero{
+margin:18px;
+border-radius:24px;
+padding:50px 24px;
+background:linear-gradient(135deg,#1b1b1b,#101010);
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 20px 60px rgba(0,0,0,.4);
+}
+.hero h1{font-size:34px}
+.hero p{color:#aaa;margin-top:8px}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
+gap:18px;
+padding:18px;
+}
+.card{
+display:block;
+text-decoration:none;
+color:#fff;
+border-radius:18px;
+overflow:hidden;
+background:#141414;
+transition:.35s;
+border:1px solid rgba(255,255,255,.06);
+opacity:0;
+transform:translateY(20px);
+animation:fade .5s forwards;
+}
+.card:hover{transform:translateY(-6px) scale(1.03);box-shadow:0 20px 40px rgba(0,0,0,.45)}
+.thumb{position:relative;aspect-ratio:2/3;background:#222}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.badge{
+position:absolute;top:10px;left:10px;
+background:#e50914;padding:5px 9px;border-radius:999px;
+font-size:11px;font-weight:700
+}
+.info{padding:12px}
+.title{
+font-size:15px;font-weight:700;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.sub{font-size:12px;color:#999;margin-top:4px}
+footer{
+text-align:center;padding:30px;color:#666
+}
+@keyframes fade{to{opacity:1;transform:none}}
+@media(max-width:600px){
+.grid{grid-template-columns:repeat(3,1fr);gap:10px;padding:10px}
+.hero{padding:30px 18px}
+.hero h1{font-size:26px}
+.search{width:120px}
+}
+</style>
+</head>
+<body>
 
+<header>
+<div class="logo">NETGALLERY</div>
+<input class="search" id="search" placeholder="Search">
+</header>
+
+<section class="hero">
+<h1>Premium Gallery</h1>
+<p>Fast • Minimal • Netflix Inspired</p>
+</section>
+
+<div class="grid" id="gallery"></div>
+
+<footer>© 2026 Premium Gallery</footer>
+
+<script>
+const gallery=document.getElementById("gallery");
+const search=document.getElementById("search");
+let items=[];
+
+fetch("data.json")
+.then(r=>r.json())
+.then(data=>{
+items=data;
+render(items);
+})
+.catch(()=>{
+gallery.innerHTML="<p style='padding:20px;color:#999'>data.json tidak ditemukan.</p>";
+});
+
+function render(list){
+gallery.innerHTML="";
+list.forEach((item,i)=>{
+gallery.innerHTML+=`
+<a class="card" href="${item.link}" target="_blank" style="animation-delay:${i*0.03}s">
+<div class="thumb">
+<img loading="lazy" src="${item.img}" alt="">
+<div class="badge">NEW</div>
+</div>
+<div class="info">
+<div class="title">${item.title||"Premium Content"}</div>
+<div class="sub">Click to Open</div>
+</div>
+</a>`;
+});
+}
+
+search.oninput=()=>{
+const q=search.value.toLowerCase();
+render(items.filter(x=>(x.title||"").toLowerCase().includes(q)));
+}
+</script>
+
+</body>
+</html>
