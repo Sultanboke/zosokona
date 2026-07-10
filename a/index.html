@@ -9,23 +9,63 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Inter,sans-serif;background:#0a0a0a;color:#fff;background-image:radial-gradient(circle at top,#1a1a1a,#0a0a0a 45%)}
-header{position:sticky;top:0;z-index:99;display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:rgba(10,10,10,.75);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
-.logo{font-size:28px;font-weight:800;color:#e50914}
-.search{width:180px;padding:10px 14px;border:none;border-radius:999px;background:#181818;color:#fff;outline:none}
-.hero{margin:18px;border-radius:24px;padding:40px 24px;background:linear-gradient(135deg,#1b1b1b,#101010);border:1px solid rgba(255,255,255,.08)}
-.hero h1{font-size:34px}
+
+header{
+position:sticky;
+top:0;
+z-index:99;
+text-align:center;
+padding:16px;
+background:rgba(10,10,10,.75);
+backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.logo{
+font-size:24px;
+font-weight:700;
+color:#e50914;
+}
+
+.hero{
+margin:12px;
+border-radius:18px;
+padding:24px 18px;
+}
+
+.hero h1{
+font-size:26px;
+}
+
 .hero p{color:#aaa;margin-top:8px}
 .running{margin-top:15px;padding:8px;border-radius:10px;background:#181818;color:#e50914}
 .top-menu{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:0 18px 18px}
 .menu-btn{padding:12px 20px;border-radius:999px;text-decoration:none;color:#fff;background:#181818;border:1px solid rgba(255,255,255,.08)}
-.announcement{margin:0 18px 18px;padding:12px;border-radius:12px;background:#e50914;text-align:center;font-weight:700}
+
+.announcement{
+font-size:13px;
+font-weight:600;
+}
+
 .banner{max-width:728px;margin:18px auto;padding:0 18px}
 .banner img{width:100%;border-radius:12px;display:block}
 .container{max-width:900px;margin:auto;padding:18px}
 .post{background:#141414;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px;margin-bottom:18px;animation:fade .4s}
-.post h2{font-size:20px;margin-bottom:15px}
+
+.post h2{
+font-size:16px;
+font-weight:700;
+line-height:1.4;
+}
+
 .links{display:grid;gap:10px}
-.links a{text-decoration:none;color:#fff;background:#229ED9;padding:12px;border-radius:10px;font-weight:700;text-align:center}
+
+.links a{
+padding:12px;
+font-size:14px;
+font-weight:600;
+}
+
 footer{text-align:center;padding:30px;color:#666}
 @keyframes fade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
 </style>
@@ -34,14 +74,7 @@ footer{text-align:center;padding:30px;color:#666}
 
 <header>
 <div class="logo">LINKDOODVI</div>
-<input id="search" class="search" placeholder="Search">
 </header>
-
-<div class="banner">
-<a href="https://link-affiliate-kamu.com" target="_blank">
-<img src="../featured-top.png" alt="Banner">
-</a>
-</div>
 
 <section class="hero">
 <h1>Link Dood</h1>
@@ -62,7 +95,6 @@ footer{text-align:center;padding:30px;color:#666}
 
 <script>
 const posts=document.getElementById("posts");
-const search=document.getElementById("search");
 let all=[];
 
 fetch("posts.json")
@@ -85,11 +117,6 @@ html+=`</div></div>`;
 posts.innerHTML+=html;
 });
 }
-
-search.oninput=()=>{
-const q=search.value.toLowerCase();
-render(all.filter(p=>p.title.toLowerCase().includes(q)));
-};
 </script>
 
 </body>
