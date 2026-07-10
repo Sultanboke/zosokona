@@ -8,66 +8,103 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Inter,sans-serif;background:#0a0a0a;color:#fff;background-image:radial-gradient(circle at top,#1a1a1a,#0a0a0a 45%)}
-
+body{
+font-family:Inter,sans-serif;
+background:#0a0a0a;
+color:#fff;
+background-image:radial-gradient(circle at top,#1a1a1a,#0a0a0a 45%);
+}
 header{
-position:sticky;
-top:0;
-z-index:99;
-text-align:center;
+position:sticky;top:0;z-index:99;
 padding:16px;
-background:rgba(10,10,10,.75);
-backdrop-filter:blur(14px);
+text-align:center;
+background:rgba(10,10,10,.78);
+backdrop-filter:blur(12px);
 border-bottom:1px solid rgba(255,255,255,.08);
 }
-
-.logo{
-font-size:24px;
-font-weight:700;
-color:#e50914;
-}
-
+.logo{font-size:26px;font-weight:800;color:#e50914}
 .hero{
-margin:12px;
-border-radius:18px;
+margin:14px;
 padding:24px 18px;
+border-radius:20px;
+background:linear-gradient(135deg,#1b1b1b,#101010);
+border:1px solid rgba(255,255,255,.08);
 }
-
-.hero h1{
-font-size:26px;
-}
-
-.hero p{color:#aaa;margin-top:8px}
-.running{margin-top:15px;padding:8px;border-radius:10px;background:#181818;color:#e50914}
-.top-menu{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;padding:0 18px 18px}
-.menu-btn{padding:12px 20px;border-radius:999px;text-decoration:none;color:#fff;background:#181818;border:1px solid rgba(255,255,255,.08)}
-
-.announcement{
+.hero h1{font-size:26px}
+.hero p{margin-top:8px;color:#a7a7a7;font-size:14px}
+.running{
+margin-top:15px;
+background:#181818;
+padding:8px;
+border-radius:10px;
+color:#e50914;
 font-size:13px;
-font-weight:600;
 }
-
-.banner{max-width:728px;margin:18px auto;padding:0 18px}
-.banner img{width:100%;border-radius:12px;display:block}
-.container{max-width:900px;margin:auto;padding:18px}
-.post{background:#141414;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:18px;margin-bottom:18px;animation:fade .4s}
-
-.post h2{
-font-size:16px;
-font-weight:700;
-line-height:1.4;
+.top-menu{
+display:flex;
+gap:10px;
+padding:0 14px 14px;
 }
-
-.links{display:grid;gap:10px}
-
-.links a{
+.menu-btn{
+flex:1;
+text-align:center;
 padding:12px;
+background:#181818;
+border:1px solid rgba(255,255,255,.08);
+border-radius:999px;
+color:#fff;
+text-decoration:none;
 font-size:14px;
 font-weight:600;
 }
-
-footer{text-align:center;padding:30px;color:#666}
-@keyframes fade{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:none}}
+.announcement{
+margin:0 14px 14px;
+padding:12px;
+border-radius:12px;
+background:#e50914;
+font-size:13px;
+font-weight:600;
+text-align:center;
+}
+.container{padding:14px}
+.post{
+background:#151515;
+border:1px solid rgba(255,255,255,.08);
+border-radius:16px;
+padding:16px;
+margin-bottom:14px;
+animation:fade .35s;
+}
+.post h2{
+font-size:17px;
+line-height:1.5;
+margin-bottom:14px;
+}
+.links{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+.links a{
+text-decoration:none;
+background:#229ED9;
+color:#fff;
+padding:12px;
+border-radius:10px;
+font-size:14px;
+font-weight:700;
+text-align:center;
+}
+footer{
+padding:25px;
+text-align:center;
+font-size:12px;
+color:#777;
+}
+@keyframes fade{
+from{opacity:0;transform:translateY(12px)}
+to{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
@@ -78,7 +115,9 @@ footer{text-align:center;padding:30px;color:#666}
 
 <section class="hero">
 <h1>Link Dood</h1>
-<div class="running"><marquee scrollamount="5">🔥 Updated Every Day • Premium Links • Fast Access • Bookmark This Website</marquee></div>
+<div class="running">
+<marquee scrollamount="5">🔥 Updated Every Day • Premium Links • Fast Access • Bookmark This Website</marquee>
+</div>
 <p>Daily Link Updates</p>
 </section>
 
@@ -87,7 +126,9 @@ footer{text-align:center;padding:30px;color:#666}
 <a href="disclaimer.html" class="menu-btn">⚠️ Disclaimer</a>
 </div>
 
-<div class="announcement">📢 New Collection Added Today • Check The Latest Updates Below!</div>
+<div class="announcement">
+📢 New Collection Added Today • Check The Latest Updates Below!
+</div>
 
 <div id="posts" class="container"></div>
 
@@ -110,8 +151,8 @@ list.forEach((post,index)=>{
 let html=`<div class="post">
 <h2>${index<5?'🆕 ':''}${post.title}</h2>
 <div class="links">`;
-post.links.forEach((l,i)=>{
-html+=`<a href="${l}" target="_blank">▶ Link ${i+1}</a>`;
+post.links.forEach((link,i)=>{
+html+=`<a href="${link}" target="_blank">▶ Link ${i+1}</a>`;
 });
 html+=`</div></div>`;
 posts.innerHTML+=html;
