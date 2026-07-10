@@ -306,25 +306,6 @@ if(el.querySelector("canvas")) return;
 let img = new Image();
 img.src = el.dataset.img;
 
-img.onload=()=>{
-
-let canvas=document.createElement("canvas");
-let ctx=canvas.getContext("2d");
-
-canvas.width=img.width;
-canvas.height=img.height;
-
-ctx.drawImage(img,0,0);
-
-function renderCanvas(){
-
-document.querySelectorAll(".thumb").forEach(el=>{
-
-if(el.querySelector("canvas")) return;
-
-let img = new Image();
-img.src = el.dataset.img;
-
 img.onload = ()=>{
 
 let canvas = document.createElement("canvas");
