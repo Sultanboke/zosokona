@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+
+<title>Support Us</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,sans-serif;
+}
+
+body{
+background:#0a0a0a;
+background-image:radial-gradient(circle at top,#1a1a1a,#0a0a0a 45%);
+color:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+}
+
+.card{
+width:100%;
+max-width:420px;
+background:#141414;
+border:1px solid rgba(255,255,255,.08);
+border-radius:22px;
+padding:30px 22px;
+text-align:center;
+box-shadow:0 20px 60px rgba(0,0,0,.45);
+}
+
+.icon{
+font-size:58px;
+margin-bottom:16px;
+}
+
+h1{
+font-size:28px;
+font-weight:800;
+margin-bottom:10px;
+}
+
+.desc{
+color:#b8b8b8;
+font-size:15px;
+line-height:1.7;
+margin-bottom:25px;
+}
+
+.network{
+display:inline-block;
+background:#26A17B;
+padding:8px 16px;
+border-radius:999px;
+font-size:13px;
+font-weight:700;
+margin-bottom:20px;
+}
+
+.wallet{
+background:#0d0d0d;
+border:1px solid #2a2a2a;
+border-radius:14px;
+padding:16px;
+font-size:14px;
+word-break:break-all;
+line-height:1.8;
+margin-bottom:18px;
+}
+
+.copy-btn{
+width:100%;
+padding:15px;
+border:none;
+border-radius:14px;
+background:#26A17B;
+color:#fff;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+transition:.25s;
+}
+
+.copy-btn:hover{
+opacity:.9;
+}
+
+.note{
+margin-top:18px;
+font-size:13px;
+color:#8f8f8f;
+line-height:1.7;
+}
+
+.footer{
+margin-top:25px;
+font-size:12px;
+color:#666;
+}
+
+</style>
+</head>
+<body>
+
+<div class="card">
+
+<div class="icon">💚</div>
+
+<h1>Support Our Website</h1>
+
+<p class="desc">
+Your support helps us keep the website online and continue providing fresh updates every day.
+Every donation is greatly appreciated.
+</p>
+
+<div class="network">
+USDT (TRC20)
+</div>
+
+<div class="wallet" id="wallet">
+TVm4hobikFLNfu9aUMRVqvzA6TuVxJvqWf
+</div>
+
+<button class="copy-btn" onclick="copyWallet()">
+📋 Copy Wallet Address
+</button>
+
+<div class="note">
+Please make sure you send <b>USDT via the TRC20 network</b> only.<br>
+Sending funds through another network may result in permanent loss.
+</div>
+
+<div class="footer">
+© 2026 xfreebokep
+</div>
+
+</div>
+
+<script>
+
+function copyWallet(){
+
+const wallet=document.getElementById("wallet").innerText;
+
+navigator.clipboard.writeText(wallet);
+
+alert("Wallet address copied successfully!");
+
+}
+
+</script>
+
+</body>
+</html>
