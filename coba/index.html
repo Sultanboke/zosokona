@@ -484,41 +484,37 @@ items.filter(x=>
 
 const FACEBOOK_URL = "https://facebook.com/YOUR_FACEBOOK_PAGE";
 
-// Reset setiap refresh
-sessionStorage.removeItem("fbStep");
-sessionStorage.removeItem("nextLink");
-
 document.addEventListener("click", function(e){
 
     const link = e.target.closest("a");
 
     if(!link) return;
 
-    // Klik pertama
-    if(!sessionStorage.getItem("fbStep")){
-
-        e.preventDefault();
-
-        sessionStorage.setItem("fbStep","1");
-        sessionStorage.setItem("nextLink", link.href);
-
-        window.location.href = FACEBOOK_URL;
-
+    // Jangan arahkan halaman tutorial & disclaimer
+    if(
+        link.href.includes("tutorial.html") ||
+        link.href.includes("disclaimer.html")
+    ){
         return;
     }
 
-    // Klik kedua
-    const next = sessionStorage.getItem("nextLink");
+    const savedLink = sessionStorage.getItem("nextLink");
 
-    if(next){
-
-        e.preventDefault();
+    // Klik kedua pada link yang sama
+    if(savedLink === link.href){
 
         sessionStorage.removeItem("nextLink");
 
-        window.location.href = next;
+        return;
 
     }
+
+    // Klik pertama
+    e.preventDefault();
+
+    sessionStorage.setItem("nextLink", link.href);
+
+    window.location.href = FACEBOOK_URL;
 
 });
   
