@@ -276,7 +276,9 @@ pagination.innerHTML+=`
 
 }
 
-} // akhir function render()
+renderCanvas();
+
+  }
 
 function renderCanvas(){
 
@@ -285,8 +287,8 @@ document.querySelectorAll(".thumb").forEach(el=>{
 if(el.querySelector("canvas")) return;
 
 let img=new Image();
-img.crossOrigin="anonymous";
-img.src=el.dataset.img;
+let img = new Image();
+img.src = el.dataset.img;
 
 img.onload=()=>{
 
