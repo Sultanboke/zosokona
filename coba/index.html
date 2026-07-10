@@ -71,6 +71,19 @@ top:0;
 left:0;
 z-index:1;
 }
+.badge{
+position:absolute;
+top:10px;
+left:10px;
+background:#e50914;
+color:#fff;
+padding:5px 9px;
+border-radius:999px;
+font-size:11px;
+font-weight:700;
+z-index:999;
+pointer-events:none;
+}  
 .info{padding:12px}
 .title{
 font-size:15px;font-weight:700;
@@ -303,11 +316,17 @@ canvas.height=img.height;
 
 ctx.drawImage(img,0,0);
 
-if(el.querySelector(".badge")){
-el.insertBefore(canvas,el.querySelector(".badge"));
-}else{
+img.onload = () => {
+
+let canvas = document.createElement("canvas");
+let ctx = canvas.getContext("2d");
+
+canvas.width = img.width;
+canvas.height = img.height;
+
+ctx.drawImage(img,0,0);
+
 el.appendChild(canvas);
-}
 
 };
 
