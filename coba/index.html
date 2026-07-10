@@ -252,12 +252,19 @@ pagination.innerHTML+=`
 
 }
 
-for(let i=1;i<=totalPages;i++){
+const maxVisible = 5;
 
-pagination.innerHTML+=`
-<button class="${i===currentPage?'active':''}" onclick="changePage(${i})">${i}</button>
-`;
+let startPage = Math.max(1, currentPage - 2);
+let endPage = Math.min(totalPages, startPage + maxVisible - 1);
 
+if(endPage - startPage < maxVisible - 1){
+    startPage = Math.max(1, endPage - maxVisible + 1);
+}
+
+for(let i = startPage; i <= endPage; i++){
+    pagination.innerHTML += `
+    <button class="${i===currentPage?'active':''}"
+    onclick="changePage(${i})">${i}</button>`;
 }
 
 if(currentPage<totalPages){
