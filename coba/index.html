@@ -121,6 +121,18 @@ transition:.3s;
 background:#e50914;
 transform:translateY(-2px);
 }
+.running-text{
+flex:1;
+margin:0 20px;
+font-size:14px;
+color:#ddd;
+white-space:nowrap;
+overflow:hidden;
+}
+
+.running-text marquee{
+width:100%;
+}  
   
   
 </style>
@@ -128,8 +140,17 @@ transform:translateY(-2px);
 <body>
 
 <header>
+
 <div class="logo">TELEBOKEP</div>
+
+<div class="running-text">
+<marquee scrollamount="4">
+🔥 Updated Every Day • Premium Links • Fast Access • No Fake Links • Enjoy!
+</marquee>
+</div>
+
 <input class="search" id="search" placeholder="Search">
+
 </header>
 
 <section class="hero">
