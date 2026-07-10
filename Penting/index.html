@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Premium Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:Inter,sans-serif;
+background:#0a0a0a;color:#fff;
+background-image:radial-gradient(circle at top,#1a1a1a,#0a0a0a 45%);
+}
+header{
+position:sticky;top:0;z-index:99;
+display:flex;justify-content:space-between;align-items:center;
+padding:16px 20px;
+background:rgba(10,10,10,.72);
+backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(255,255,255,.08);
+}
+.logo{font-size:28px;font-weight:800;color:#e50914}
+.search{
+width:180px;padding:10px 14px;border:none;border-radius:999px;
+background:#181818;color:#fff;outline:none
+}
+.hero{
+margin:18px;
+border-radius:24px;
+padding:50px 24px;
+background:linear-gradient(135deg,#1b1b1b,#101010);
+border:1px solid rgba(255,255,255,.08);
+box-shadow:0 20px 60px rgba(0,0,0,.4);
+}
+.hero h1{font-size:34px}
+.hero p{color:#aaa;margin-top:8px}
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(165px,1fr));
+gap:18px;
+padding:18px;
+}
+.card{
+display:block;
+text-decoration:none;
+color:#fff;
+border-radius:18px;
+overflow:hidden;
+background:#141414;
+transition:.35s;
+border:1px solid rgba(255,255,255,.06);
+opacity:0;
+transform:translateY(20px);
+animation:fade .5s forwards;
+}
+.thumb{
+position:relative;
+aspect-ratio:2/3;
+background:#222;
+overflow:hidden;
+}
+
+.thumb canvas{
+width:100%;
+height:100%;
+display:block;
+object-fit:cover;
+position:absolute;
+top:0;
+left:0;
+z-index:1;
+}
+.badge{
+position:absolute;
+top:10px;
+left:10px;
+background:#e50914;
+color:#fff;
+padding:5px 9px;
+border-radius:999px;
+font-size:11px;
+font-weight:700;
+z-index:999;
+pointer-events:none;
+}  
+.info{padding:12px}
+.title{
+font-size:15px;font-weight:700;
+white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.sub{font-size:12px;color:#999;margin-top:4px}
+footer{
+text-align:center;padding:30px;color:#666
+}
+@keyframes fade{to{opacity:1;transform:none}}
+@media(max-width:600px){
+.grid{grid-template-columns:repeat(3,1fr);gap:10px;padding:10px}
+.hero{padding:30px 18px}
+.hero h1{font-size:26px}
+.search{width:120px}
+}
+.pagination{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:8px;
+padding:20px;
+}
+
+.pagination button{
+padding:10px 15px;
+border:none;
+border-radius:10px;
+background:#1c1c1c;
+color:#fff;
+cursor:pointer;
+}
+
+.pagination button.active{
+background:#e50914;
+}
+.top-menu{
+display:flex;
+justify-content:center;
+gap:12px;
+padding:0 18px 18px;
+flex-wrap:wrap;
+}
+
+.menu-btn{
+padding:12px 22px;
+background:#181818;
+color:#fff;
+text-decoration:none;
+font-weight:700;
+border-radius:999px;
+border:1px solid rgba(255,255,255,.08);
+transition:.3s;
+}
+
+.menu-btn:hover{
+background:#e50914;
+transform:translateY(-2px);
+}
+.running-text{
+margin:12px 0;
+padding:8px 12px;
+background:#181818;
+border:1px solid rgba(255,255,255,.08);
+border-radius:10px;
+color:#e50914;
+font-size:14px;
+font-weight:600;
+overflow:hidden;
+}
+
+.running-text marquee{
+width:100%;
+}
+  
+  
+</style>
+</head>
+<body>
+
+<header>
+
+<div class="logo">TELEBOKEP</div>
+
+<input class="search" id="search" placeholder="Search">
+
+</header>
+
+<section class="hero">
+<h1>Link Dood</h1>
+
+<div class="running-text">
+<marquee scrollamount="5">
+🔥 Updated Every Day • Premium Links • Fast Access • No Fake Links • Enjoy!
+</marquee>
+</div>
+
+<p>Update setiap hari</p>
+</section>
+
+<div class="top-menu">
+
+<a href="tutorial.html" class="menu-btn">
+🎬 Tutorial Watch
+</a>
+
+<a href="disclaimer.html" class="menu-btn">
+⚠️ Disclaimer
+</a>
+
+</div>
+
+<div class="grid" id="gallery"></div>
+
+<div id="pagination" class="pagination"></div>
+
+<footer>© 2026 Premium Gallery</footer>
+
+<script>
+const gallery = document.getElementById("gallery");
+const search = document.getElementById("search");
+const pagination = document.getElementById("pagination");
+
+let items = [];
+
+const PER_PAGE = 30;
+let currentPage = 1;
+
+fetch("data.json")
+.then(r=>r.json())
+.then(data=>{
+
+// Membalik urutan data agar yang terakhir di data.json tampil paling atas
+items = data.reverse();
+
+render(items);
+
+})
+.catch(()=>{
+gallery.innerHTML="<p style='padding:20px;color:#999'>data.json tidak ditemukan.</p>";
+});
+
+function render(list){
+
+gallery.innerHTML="";
+
+const totalPages = Math.ceil(list.length / PER_PAGE);
+
+if(currentPage > totalPages) currentPage = 1;
+
+const start = (currentPage - 1) * PER_PAGE;
+const end = start + PER_PAGE;
+
+const pageItems = list.slice(start, end);
+
+pageItems.forEach((item,i)=>{
+
+gallery.innerHTML+=`
+<a class="card" href="${item.link}" target="_blank" style="animation-delay:${i*0.03}s">
+
+<div class="thumb" data-img="${item.img}">
+${start+i < 5 ? '<div class="badge">NEW</div>' : ''}
+</div>
+
+<div class="info">
+
+<div class="title">${item.title||"telebkp"}</div>
+
+<div class="sub">Click to Open</div>
+
+</div>
+
+</a>`;
+
+});
+
+pagination.innerHTML="";
+
+if(currentPage>1){
+
+pagination.innerHTML+=`
+<button onclick="changePage(${currentPage-1})">◀ Prev</button>
+`;
+
+}
+
+const maxVisible = 3;
+
+let startPage = Math.max(1, currentPage - 1);
+let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+if(endPage - startPage < maxVisible - 1){
+    startPage = Math.max(1, endPage - maxVisible + 1);
+}
+
+for(let i = startPage; i <= endPage; i++){
+    pagination.innerHTML += `
+    <button class="${i===currentPage?'active':''}"
+    onclick="changePage(${i})">${i}</button>`;
+}
+
+if(currentPage<totalPages){
+
+pagination.innerHTML+=`
+<button onclick="changePage(${currentPage+1})">Next ▶</button>
+`;
+
+}
+
+renderCanvas();
+
+  }
+
+function renderCanvas(){
+
+document.querySelectorAll(".thumb").forEach(el=>{
+
+if(el.querySelector("canvas")) return;
+
+let img = new Image();
+img.src = el.dataset.img;
+
+img.onload = ()=>{
+
+let canvas = document.createElement("canvas");
+let ctx = canvas.getContext("2d");
+
+canvas.width = img.width;
+canvas.height = img.height;
+
+ctx.drawImage(img,0,0);
+
+el.appendChild(canvas);
+
+};
+
+});
+
+}
+
+function changePage(page){
+
+currentPage = page;
+
+render(items);
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+  }
+  
+search.oninput=()=>{
+
+currentPage = 1;
+
+const q = search.value.toLowerCase();
+
+render(
+items.filter(x=>
+(x.title||"").toLowerCase().includes(q)
+)
+
+);
+
+  }
+</script>
+
+</body>
+  </html>
