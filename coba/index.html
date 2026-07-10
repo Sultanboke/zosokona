@@ -270,9 +270,9 @@ pagination.innerHTML+=`
 
 }
 
-const maxVisible = 5;
+const maxVisible = 3;
 
-let startPage = Math.max(1, currentPage - 2);
+let startPage = Math.max(1, currentPage - 1);
 let endPage = Math.min(totalPages, startPage + maxVisible - 1);
 
 if(endPage - startPage < maxVisible - 1){
