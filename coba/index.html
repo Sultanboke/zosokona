@@ -313,18 +313,33 @@ let items = [];
 const PER_PAGE = 30;
 let currentPage = 1;
 
-fetch("data.json")
-.then(r=>r.json())
-.then(data=>{
+Promise.allSettled([
+    fetch("databkp/zoxo2.json").then(r => r.json()),
+    fetch("databkp/zoxo1.json").then(r => r.json()),
+    fetch("databkp/zoxo3.json").then(r => r.json()),
+    fetch("databkp/zoxo4.json").then(r => r.json()),
+    fetch("databkp/zoxo5.json").then(r => r.json())
+]).then(results => {
 
-// Membalik urutan data agar yang terakhir di data.json tampil paling atas
-items = data.reverse();
+    items = [];
 
-render(items);
+    results.forEach(result => {
 
-})
-.catch(()=>{
-gallery.innerHTML="<p style='padding:20px;color:#999'>data.json tidak ditemukan.</p>";
+        if(result.status === "fulfilled"){
+
+            items.push(...result.value.reverse());
+
+        }
+
+    });
+
+    render(items);
+
+}).catch(()=>{
+
+    gallery.innerHTML =
+    "<p style='padding:20px;color:#999'>Data tidak ditemukan.</p>";
+
 });
 
   
@@ -482,7 +497,7 @@ items.filter(x=>
 
 }
 
-const FACEBOOK_URL = "https://facebook.com/YOUR_FACEBOOK_PAGE";
+const FACEBOOK_URL = "https://s.shopee.co.id/6AgjMu9BDn";
 
 document.addEventListener("click", function(e){
 
