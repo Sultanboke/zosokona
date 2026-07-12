@@ -482,45 +482,6 @@ items.filter(x=>
 
 }
 
-const FACEBOOK_URL = "https://facebook.com/YOUR_FACEBOOK_PAGE";
-
-// Reset setiap refresh
-sessionStorage.removeItem("fbStep");
-sessionStorage.removeItem("nextLink");
-
-document.addEventListener("click", function(e){
-
-    const link = e.target.closest("a");
-
-    if(!link) return;
-
-    // Klik pertama
-    if(!sessionStorage.getItem("fbStep")){
-
-        e.preventDefault();
-
-        sessionStorage.setItem("fbStep","1");
-        sessionStorage.setItem("nextLink", link.href);
-
-        window.location.href = FACEBOOK_URL;
-
-        return;
-    }
-
-    // Klik kedua
-    const next = sessionStorage.getItem("nextLink");
-
-    if(next){
-
-        e.preventDefault();
-
-        sessionStorage.removeItem("nextLink");
-
-        window.location.href = next;
-
-    }
-
-});
   
 </script>
 
